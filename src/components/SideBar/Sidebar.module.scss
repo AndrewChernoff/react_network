@@ -1,0 +1,13 @@
+.sidebar {
+    grid-area: nav;
+    max-width: 200px;
+    height: 100vh;
+    background: #dfe3ee;
+    ul {
+        padding: 10px 0 0 25%;
+        li{
+            margin-top: 15px;
+        }
+    }
+}
+

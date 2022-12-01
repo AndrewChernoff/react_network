@@ -1,0 +1,8 @@
+.app {
+  display: grid;
+  grid-template-areas:
+  "header header header"
+  "nav content content"
+  "nav content content";
+  border-radius: 10px;
+}

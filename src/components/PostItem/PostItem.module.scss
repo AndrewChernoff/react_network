@@ -1,0 +1,22 @@
+.post__item {
+    display: flex;
+    //justify-content: space-between;
+    gap: 10px;
+    align-items: flex-start;
+    max-width: 200px;
+    margin-top: 15px;
+   img {
+    max-width: 80px;
+    border-radius: 50%;
+   } 
+   &_info {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+   }
+
+   &_message {
+    font-size: 20px;
+
+   }
+}

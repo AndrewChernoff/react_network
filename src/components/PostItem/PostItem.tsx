@@ -14,7 +14,7 @@ const PostItem = ({ message, likes }: Message) => {
       />
       <div className={s.post__item_info}>
         <div className={s.post__item_message}>{message}</div>
-        <div className={s.post__item_likes}>5 likes</div>
+        <div className={s.post__item_likes}>{likes}</div>
       </div>
     </div>
   );

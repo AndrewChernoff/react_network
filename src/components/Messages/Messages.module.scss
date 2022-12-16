@@ -1,0 +1,21 @@
+.dialogs {
+    display: grid;
+    grid-template-columns: 1fr 9fr;
+    margin-top: 20px;
+    align-items: self-start;
+    &__items {
+        display: grid;
+        gap: 15px;
+    }
+
+    &__item {
+        text-decoration: none;
+        &__textarea {
+            width: 200px;
+        }
+    }
+    &__messages {
+        display: grid;
+        gap: 15px;
+    }
+}

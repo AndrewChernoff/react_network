@@ -1,27 +1,27 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import {
+  DialogType,
   MessageType,
   sendMessage,
 } from "../../redux/reducers/messagesReducer";
 import s from "./Messages.module.scss";
 
-interface Dialog {
+/* interface Dialog {
   id: number;
   name: string;
+} */
+
+type DialogsProps = {
+  dialogs: any[]
+  messages: MessageType[]
+  message: string
+  onSendClick: () => void
+  onChangeHandler: (e: any) => void
 }
 
 const Messages = (props: DialogsProps) => {
-
-
-
-  const [message, setMessage] = useState('')
-  
-  const onSendClick = () => {
-    props.sendMessage({id: (props.messages.length + 1), message: message})
-    setMessage('');
-  }
 
   return (
     <div className={s.dialogs}>
@@ -44,12 +44,9 @@ const Messages = (props: DialogsProps) => {
         {props.messages.map(({message, id}) => {
           return  <div className={s.dialogs__item} key={id}>{message}</div>
         })}
-       {/*  <div className={s.dialogs__item}>wassup bro</div>
-        <div className={s.dialogs__item}>how is it going?</div>
-        <div className={s.dialogs__item}>see u</div>*/}
         <div className={s.dialogs__item}> 
-          <textarea value={message} onChange={(e) => setMessage(e.currentTarget.value)} className={s.dialogs__item__textarea} />
-          <button onClick={onSendClick}>Send message</button>
+          <textarea value={props.message} onChange={props.onChangeHandler} className={s.dialogs__item__textarea} />
+          <button onClick={props.onSendClick}>Send message</button>
         </div>
       </div>
       </div>
@@ -57,34 +54,4 @@ const Messages = (props: DialogsProps) => {
   );
 };
 
-type Dialogs = {
-  dialogs: Dialog[]
-  messages: MessageType[]
-};
-
-type DialogsProps = {
-  dialogs: Dialog[]
-  messages: MessageType[]
-  sendMessage: (obj: MessageType) => void
-}
-
-type RootState = {
-  dialogsPage: Dialogs;
-};
-
-const mapState = (state: RootState) => ({
-  dialogs: state.dialogsPage.dialogs,
-  messages: state.dialogsPage.messages,
-});
-
-const mapDispatch = (dispatch: any) => {
-  return { 
-    sendMessage: (obj: MessageType) =>  {
-      dispatch(sendMessage(obj))
-    }
-    };
-};
-
-const connector = connect(mapState, mapDispatch);
-
-export default connector(Messages);
+export default Messages;

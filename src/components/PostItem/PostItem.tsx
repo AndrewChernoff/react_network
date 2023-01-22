@@ -9,12 +9,12 @@ const PostItem = ({ message, likes }: Message) => {
   return (
     <div className={s.post__item}>
       <img
-        src="https://avatarfiles.alphacoders.com/161/thumb-161948.jpg"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm-BebyP8MCIYBsrjWGGdgXo2gnqI95ckd1w&usqp=CAU"
         alt="ava"
       />
       <div className={s.post__item_info}>
         <div className={s.post__item_message}>{message}</div>
-        <div className={s.post__item_likes}>{likes}</div>
+        <div className={s.post__item_likes}>likes: {likes}</div>
       </div>
     </div>
   );

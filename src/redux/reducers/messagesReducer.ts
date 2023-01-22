@@ -9,13 +9,13 @@ export type MessageType = {
   id: number
   message: string
 }
-export type DialogsType = {
+export type DialogType = {
   id: number
   name: string
 }
 
 export type DialogsState = {
-    dialogs: DialogsType[]
+    dialogs: DialogType[]
     messages: MessageType[]
 };
 

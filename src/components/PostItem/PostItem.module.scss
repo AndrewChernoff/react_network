@@ -2,10 +2,13 @@
     display: flex;
     gap: 10px;
     align-items: flex-start;
-    max-width: 200px;
+    max-width: 500px;
     margin-top: 15px;
+    border: rgb(138, 138, 201) 2px solid;
+    border-radius: 10px;
    img {
-    max-width: 80px;
+    max-width: 60px;
+    height: 60px;
     border-radius: 50%;
    } 
    &_info {

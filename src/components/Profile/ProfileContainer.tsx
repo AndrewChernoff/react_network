@@ -1,9 +1,9 @@
-import { ChangeEvent, Dispatch, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { connect, ConnectedProps  } from "react-redux";
-import { addPost, PostsType } from "../../redux/reducers/profileReducer";
-import PostItem from "../PostItem/PostItem";
+import { Dispatch } from "redux";
+import { AppState } from "../../redux/reducers";
+import { addPost, PostsType, ProfileState } from "../../redux/reducers/profileReducer";
 import Profile from "./Profile";
-
 
 type ProfileProps = {
     posts: PostsType[],
@@ -26,21 +26,21 @@ const ProfileContainer = (props: ProfileProps) => {
     )
 }
 
-type PostsFromState = {
+ type MapStateType = {
     posts: PostsType[]
   }
   
-  type RootState = {
-    profile: PostsFromState
-  }
-  
-  const mapState = (state: RootState) => ({
+  const mapState = (state: AppState): MapStateType => ({
     posts: state.profile.posts
   })
+
+ type MapDispatchType = {
+    addPost: (obj: PostsType) => void
+  }
   
-  const mapDispatchToProps = (dispatch: Dispatch<any>) => {
+  const mapDispatchToProps = (dispatch: Dispatch): MapDispatchType => {
     return {
-        addPost: (obj: PostsType): void => {
+        addPost: (obj): void => {
             dispatch(addPost(obj));
         }
     }

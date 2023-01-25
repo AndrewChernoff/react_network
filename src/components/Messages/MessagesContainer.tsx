@@ -2,19 +2,24 @@ import { ChangeEvent, useState } from "react";
 import { connect } from "react-redux";
 import Messages from "./Messages";
 import {
+  DialogType,
     MessageType,
     sendMessage,
   } from "../../redux/reducers/messagesReducer";
+import { Dispatch } from "redux";
+import { AppState } from "../../redux/reducers";
 
 
   type DialogsProps = {
-    dialogs: Dialogs[]
+    dialogs: DialogType[]
     messages: MessageType[]
     sendMessage: (obj: MessageType) => void
   }
 
+  //type MessagesPropsType = MapStateType | MapDispatchType
+
 const MessagesContainer = (props: DialogsProps) => {
-    const [message, setMessage] = useState('')
+  const [message, setMessage] = useState('')
   
   const onSendClick = () => {
     props.sendMessage({id: 5, message: message})
@@ -27,27 +32,25 @@ const MessagesContainer = (props: DialogsProps) => {
   return <Messages onSendClick={onSendClick} message={message} messages={props.messages} dialogs={props.dialogs} onChangeHandler={onChangeHandler}/>
 }
 
-
-type Dialogs = {
-    dialogs: Dialogs[]
+type MapStateType = {
+    dialogs: DialogType[]
     messages: MessageType[]
   };
   
-  type RootState = {
-    dialogsPage: Dialogs;
-  };
-  
-  const mapState = (state: RootState) => ({
+  const mapState = (state: AppState): MapStateType => ({
     dialogs: state.dialogsPage.dialogs,
     messages: state.dialogsPage.messages,
   });
+
+type MapDispatchType = {
+  sendMessage: (obj: MessageType) => void
+}
   
-  const mapDispatch = (dispatch: any) => {
-    return { 
+  const mapDispatch = (dispatch: Dispatch): MapDispatchType => {
+    return {
       sendMessage: (obj: MessageType) =>  {
         dispatch(sendMessage(obj))
-      }
-      };
+      }};
   };
   
   const connector = connect(mapState, mapDispatch);

@@ -48,7 +48,7 @@ const initialState: DialogsState = {
   ]
 };
 
-const disalogsReducer = (state = initialState, action: Action): DialogsState | undefined => {
+const disalogsReducer = (state = initialState, action: Action): DialogsState => {
     switch (action.type) {
     case SEND_MESSAGE:
       return { ...state, messages: [...state.messages,  action.payload] };

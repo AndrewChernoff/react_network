@@ -1,8 +1,8 @@
 import { ChangeEvent, useState } from "react";
-import { connect, ConnectedProps  } from "react-redux";
+import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { AppState } from "../../redux/reducers";
-import { addPost, PostsType, ProfileState } from "../../redux/reducers/profileReducer";
+import { addPost, PostsType } from "../../redux/reducers/profileReducer";
 import Profile from "./Profile";
 
 type ProfileProps = {

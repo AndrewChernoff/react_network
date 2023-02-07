@@ -11,6 +11,7 @@ const SideBar = () => {
         <ul>
            <li> <NavLink to='' style={navLinkStyles}>Profile</NavLink > </li>
            <li> <NavLink to='messages' style={navLinkStyles}>Messages</NavLink></li>
+           <li> <NavLink to='users' style={navLinkStyles}>Users</NavLink></li>
            <li> <NavLink to='news' style={navLinkStyles}>News</NavLink></li>
            <li><NavLink to='music' style={navLinkStyles}>Music</NavLink></li>
            <li><NavLink to='settings' style={navLinkStyles}>Settings</NavLink></li>

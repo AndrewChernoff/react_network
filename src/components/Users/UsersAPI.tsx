@@ -1,8 +1,8 @@
-import user from "../../imgs/user.png";
 import s from "./Users.module.scss";
 import axios from "axios";
 import { UsersType } from "../../redux/reducers/usersReducer";
 import React from "react";
+import Users from "./Users";
 
 type UsersPropsType = {
   users: UsersType[]
@@ -12,6 +12,8 @@ type UsersPropsType = {
   currentPage: number
   totalCount: number
   pageSize: number
+  followUser: (id: number) => void
+  unfollowUser: (id: number) => void
 };
 
 
@@ -53,6 +55,7 @@ class UsersAPI extends React.Component<UsersPropsType> {
         }
         }> {p} </span>)}
       </div>
+      <Users users={this.props.users} followUser={this.props.followUser} unfollowUser={this.props.unfollowUser} />
       {/* {this.props.users.map((u) => {
         return (
           <div key={u.id} className={s.user}>

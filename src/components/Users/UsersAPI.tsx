@@ -3,6 +3,7 @@ import axios from "axios";
 import { UsersType } from "../../redux/reducers/usersReducer";
 import React from "react";
 import Users from "./Users";
+import { Loader } from "../../common/Loader";
 
 type UsersPropsType = {
   users: UsersType[]
@@ -14,6 +15,8 @@ type UsersPropsType = {
   pageSize: number
   followUser: (id: number) => void
   unfollowUser: (id: number) => void
+  setFetching: (isFetching: boolean) => void
+  isFetching: boolean
 };
 
 
@@ -27,10 +30,12 @@ class UsersAPI extends React.Component<UsersPropsType> {
   };
 
   componentDidMount(): void {
+    this.props.setFetching(true)
       this.getData()
       .then((data) => {
         this.props.getUsers(data.items)
         this.props.setTotalCount(data.totalCount)
+        this.props.setFetching(false)
       })
     }
   
@@ -55,18 +60,9 @@ class UsersAPI extends React.Component<UsersPropsType> {
         }
         }> {p} </span>)}
       </div>
-      <Users users={this.props.users} followUser={this.props.followUser} unfollowUser={this.props.unfollowUser} />
-      {/* {this.props.users.map((u) => {
-        return (
-          <div key={u.id} className={s.user}>
-            <img className={s.user__img} src={user} alt="user ava" />
-            <div>
-              {u.followed ? <button>Unfollow</button> : <button>Follow</button>}
-            </div>
-            <div>{u.name}</div>
-          </div>
-        );
-      })} */}
+      {this.props.isFetching ? <Loader/> :
+      <Users users={this.props.users} followUser={this.props.followUser} unfollowUser={this.props.unfollowUser}/>
+      }
     </div>
     );
   }

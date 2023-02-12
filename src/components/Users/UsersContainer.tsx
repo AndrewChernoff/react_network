@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { AppState } from "../../redux/reducers";
 import { getUsersAC, setCurrentPageAC, setTotalCountAC, UsersType } from "../../redux/reducers/usersReducer";
-import Users from "./Users";
+import UsersAPI from "./UsersAPI";
 
 type MapStateType = {
   users: UsersType[]
@@ -19,7 +19,7 @@ type MapDispatchType = {
 
 
 const UsersContainer = (props: any) => {
-  return <Users getUsers={props.getUsers} users={props.users} 
+  return <UsersAPI getUsers={props.getUsers} users={props.users} 
   setTotalCount={props.setTotalCount}
   currentPage={props.currentPage}
   pageSize={props.pageSize}

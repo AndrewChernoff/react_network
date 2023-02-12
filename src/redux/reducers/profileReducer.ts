@@ -26,7 +26,7 @@ const initialState: ProfileState = {
 const profileReducer = (state = initialState, action: Action): ProfileState  => {
   switch (action.type) {
     case ADD_POST:
-      return { ...state, posts: [...state.posts,  action.payload] };
+      return { ...state, posts: [action.payload, ...state.posts] };
 
     default:
       return state;

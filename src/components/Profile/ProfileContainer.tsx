@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { AppState } from "../../redux/reducers";
-import { addPost, PostsType } from "../../redux/reducers/profileReducer";
+import { addPost, PostsType, setUserAC, UserType } from "../../redux/reducers/profileReducer";
 import Profile from "./Profile";
 
 type ProfileProps = {
@@ -22,16 +22,21 @@ const ProfileContainer = (props: ProfileProps) => {
     setPostText(e.currentTarget.value)}
 
     return (
-        <Profile postText={postText} onAddPostClick={onAddPostClick} onTextareaChange={onTextareaChange} posts={props.posts}/>
+        <Profile postText={postText} onAddPostClick={onAddPostClick} 
+        onTextareaChange={onTextareaChange} 
+        posts={props.posts}
+        />
     )
 }
 
  type MapStateType = {
     posts: PostsType[]
+    user: UserType///
   }
   
   const mapState = (state: AppState): MapStateType => ({
-    posts: state.profile.posts
+    posts: state.profile.posts,
+    user: state.profile.user
   })
 
  type MapDispatchType = {
@@ -41,8 +46,8 @@ const ProfileContainer = (props: ProfileProps) => {
   const mapDispatchToProps = (dispatch: Dispatch): MapDispatchType => {
     return {
         addPost: (obj): void => {
-            dispatch(addPost(obj));
-        }
+            dispatch(addPost(obj))
+        },
     }
   };
   

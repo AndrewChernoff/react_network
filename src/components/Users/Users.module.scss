@@ -1,8 +1,11 @@
 .users {
     margin: 20px 0 0 20px;
 .user {
+    display: block;
     margin-top: 30px;
     width: 300px;
+    color: black;
+    text-decoration: none;
     &__img {
         max-width: 100px;
         max-height: 100px;

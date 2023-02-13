@@ -9,7 +9,7 @@ const SideBar = () => {
 
     return <nav className={s.sidebar}>
         <ul>
-           <li> <NavLink to='' style={navLinkStyles}>Profile</NavLink > </li>
+           <li> <NavLink to='profile' style={navLinkStyles}>Profile</NavLink > </li>
            <li> <NavLink to='messages' style={navLinkStyles}>Messages</NavLink></li>
            <li> <NavLink to='users' style={navLinkStyles}>Users</NavLink></li>
            <li> <NavLink to='news' style={navLinkStyles}>News</NavLink></li>

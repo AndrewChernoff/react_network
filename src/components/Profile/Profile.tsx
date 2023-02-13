@@ -1,6 +1,10 @@
-import { PostsType } from "../../redux/reducers/profileReducer";
+import axios from "axios";
+import { useEffect } from "react";
+import { useLocation, useParams } from "react-router-dom";
+import { PostsType, UserType } from "../../redux/reducers/profileReducer";
 import PostItem from "../PostItem/PostItem";
 import s from "./Profile.module.scss";
+import ProfileInfo from "./ProfileInfo";
 
  type ProfileProps = {
   posts: PostsType[],
@@ -10,11 +14,11 @@ import s from "./Profile.module.scss";
 }
 
 const Profile = (props: ProfileProps) => {
-  
+
   return (
     <div className={s.profile}>
       <div className={s.profile__container}>
-        <h2>Ava + descr</h2>
+        <ProfileInfo />
 
         <div className={s.profile__post}>
           <textarea value={props.postText} onChange={props.onTextareaChange}

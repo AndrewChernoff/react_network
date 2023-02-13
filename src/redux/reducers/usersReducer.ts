@@ -17,12 +17,12 @@ type ActionType = GetUsersType | SetTotalCountType | SetCurrentPageType | Follow
 export type UsersType = {
     name: string,
     id: number,
-    uniqueUrlName: null,
+    uniqueUrlName: string | null,
     photos: {
-      small: null,
-      large: null
+      small: string | null,
+      large: string | null
     },
-    status: null,
+    status: string | null,
     followed: boolean
 }
 

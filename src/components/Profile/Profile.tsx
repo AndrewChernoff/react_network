@@ -1,6 +1,3 @@
-import axios from "axios";
-import { useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
 import { PostsType, UserType } from "../../redux/reducers/profileReducer";
 import PostItem from "../PostItem/PostItem";
 import s from "./Profile.module.scss";

@@ -1,5 +1,3 @@
-import { Loader } from "../../common/Loader";
-import { UserType } from "../../redux/reducers/profileReducer";
 
 const ProfileInfo = () => {
 

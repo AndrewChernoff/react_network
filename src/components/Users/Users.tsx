@@ -13,7 +13,7 @@ const Users = ({users, followUser, unfollowUser}: UsersProps) => {
    return <div>
        {users.map((u) => {
         return (
-        <>
+        <div key={u.id}>
           <NavLink key={u.id} className={s.user} to={`/profile/${u.id}`}>
             <img className={s.user__img} src={u.photos.small ? u.photos.small : userAva} alt="user ava" />
             </NavLink>
@@ -22,7 +22,7 @@ const Users = ({users, followUser, unfollowUser}: UsersProps) => {
             </div>
             <div>{u.name}</div>
             <div>{u.status}</div>
-        </>
+        </div>
         );
       })}
     </div>

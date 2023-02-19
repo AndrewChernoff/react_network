@@ -1,4 +1,4 @@
-import Header from "./components/Header/Header";
+import HeaderContainer from "./components/Header/HeaderContainer";
 import SideBar from "./components/SideBar/SideBar";
 import s from "./App.module.scss";
 import { Navigate, Route, Routes } from "react-router-dom";
@@ -11,7 +11,7 @@ import UserProfile from "./components/UserProfile/UserProfile";
 function App() {
   return (
         <div className={s.app}>
-          <Header />
+          <HeaderContainer />
           <SideBar />
           <div className={s.content}>
           <Routes>

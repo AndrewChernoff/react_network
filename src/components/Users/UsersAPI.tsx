@@ -41,6 +41,9 @@ class UsersAPI extends React.Component<UsersPropsType> {
   
   render() {
 
+    console.log(this.props);
+    
+
     let pages: number[] = []
 
     for (let i = 1; i <= Math.ceil(this.props.totalCount / this.props.pageSize); i++) {

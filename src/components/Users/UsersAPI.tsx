@@ -7,21 +7,22 @@ import { Loader } from "../../common/Loader";
 import API from "../../services/API";
 
 type UsersPropsType = {
-  users: UsersType[];
-  getUsers: (obj: UsersType[]) => void;
-  setTotalCount: (totalCount: number) => void;
-  setCurrentPage: (currentPage: number) => void;
-  currentPage: number;
-  totalCount: number;
-  pageSize: number;
-  followUser: (id: number) => void;
-  unfollowUser: (id: number) => void;
-  setFetching: (isFetching: boolean) => void;
-  isFetching: boolean;
+  users: UsersType[]
+  getUsers: (obj: UsersType[]) => void
+  setTotalCount: (totalCount: number) => void
+  setCurrentPage: (currentPage: number) => void
+  currentPage: number
+  totalCount: number
+  pageSize: number
+  followUser: (id: number) => void
+  unfollowUser: (id: number) => void
+  setFetching: (isFetching: boolean) => void
+  isFetching: boolean
+  setFollowingInProgress: (fetching: boolean, userId: number) => void
+  followingInProgress: number[]
 };
 
 class UsersAPI extends React.Component<UsersPropsType> {
-
   componentDidMount(): void {
     API.getUsers(this.props.pageSize, this.props.currentPage).then((data) => {
       this.props.getUsers(data.items);
@@ -66,9 +67,11 @@ class UsersAPI extends React.Component<UsersPropsType> {
           <Loader />
         ) : (
           <Users
+            setFollowingInProgress={this.props.setFollowingInProgress}
             users={this.props.users}
             followUser={this.props.followUser}
             unfollowUser={this.props.unfollowUser}
+            followingInProgress={this.props.followingInProgress}
           />
         )}
       </div>

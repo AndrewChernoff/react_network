@@ -6,6 +6,7 @@ import {
   getUsersAC,
   setCurrentPageAC,
   setFetchingAC,
+  setFollowingInProgressAC,
   setTotalCountAC,
   unfollowUserAC,
   UsersType,
@@ -13,11 +14,12 @@ import {
 import UsersAPI from "./UsersAPI";
 
 type MapStateType = {
-  users: UsersType[];
-  currentPage: number;
-  totalCount: number;
-  pageSize: number;
-  isFetching: boolean;
+  users: UsersType[]
+  currentPage: number
+  totalCount: number
+  pageSize: number
+  isFetching: boolean
+  followingInProgress: number[]
 };
 
 type MapDispatchType = {
@@ -43,6 +45,8 @@ const UsersContainer = (props: any) => {
       unfollowUser={props.unfollowUser}
       setFetching={props.setFetching}
       isFetching={props.isFetching}
+      setFollowingInProgress={props.setFollowingInProgress}
+      followingInProgress={props.followingInProgress}
     />
   );
 };
@@ -53,6 +57,7 @@ const mapStateToProps = (state: AppState): MapStateType => ({
   totalCount: state.usersPage.totalCount,
   pageSize: state.usersPage.pageSize,
   isFetching: state.usersPage.isFetching,
+  followingInProgress: state.usersPage.followingInProgress
 });
 
 /* const mapDispatchToProps = (dispatch: Dispatch): MapDispatchType => {
@@ -72,4 +77,5 @@ export default connect(mapStateToProps, {
   followUser: followUserAC,
   unfollowUser: unfollowUserAC,
   setFetching: setFetchingAC,
+  setFollowingInProgress: setFollowingInProgressAC
 })(UsersContainer);

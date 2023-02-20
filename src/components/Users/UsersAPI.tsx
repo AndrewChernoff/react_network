@@ -24,7 +24,9 @@ class UsersAPI extends React.Component<UsersPropsType> {
 
   getData = async () => {
     const { data } = await axios.get(
-      `https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`
+      `https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`, {
+        withCredentials: true
+      }
     );
     return await data;
   };
@@ -40,9 +42,6 @@ class UsersAPI extends React.Component<UsersPropsType> {
     }
   
   render() {
-
-    console.log(this.props);
-    
 
     let pages: number[] = []
 

@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import { Dispatch } from "redux"
 import { AppState } from "../../redux/reducers"
 import { AuthDataType, setUserAuthorizedUserAC } from "../../redux/reducers/authReducer"
+import API from "../../services/API"
 import Header from "./Header"
 
 type MapStateType = {
@@ -23,16 +24,8 @@ class HeaderContainer extends React.Component<PropsType>  {
         this.state = {userId: null};
       }
 
-
-    getData = async() => {
-     let {data} =  await axios.get('https://social-network.samuraijs.com/api/1.0//auth/me', {
-        withCredentials: true
-     })
-        return await data
-    }
-
     componentDidMount(): void {
-        this.getData()
+        API.authMe()
         .then(data => this.props.setUserAuthorizedUser(data.data))
         .then(() => {
             if(this.props.id) {

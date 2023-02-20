@@ -4,6 +4,7 @@ import s from "./Users.module.scss";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import React from "react";
+import API from "../../services/API";
 
 type UsersProps = {
   users: UsersType[];
@@ -11,11 +12,9 @@ type UsersProps = {
   unfollowUser: (id: number) => void;
 };
 
-class Users /* = ({users, followUser, unfollowUser}: UsersProps) */
-  extends React.Component<UsersProps>
-{
+class Users extends React.Component<UsersProps> {
   onFollowClick = (userId: number) => {
-    axios
+    /* axios
       .post(
         `https://social-network.samuraijs.com/api/1.0/follow/${userId}`,
         {},
@@ -25,8 +24,8 @@ class Users /* = ({users, followUser, unfollowUser}: UsersProps) */
             "API-KEY": "cf030fe2-6f9a-49e8-86a7-893fb44b9868",
           },
         }
-      )
-      .then((res) => {
+      ) */
+      API.follow(userId).then((res) => {
         if (res.data.resultCode === 0) {
           this.props.followUser(userId);
         }
@@ -34,14 +33,18 @@ class Users /* = ({users, followUser, unfollowUser}: UsersProps) */
   };
 
   onUnFollowClick = (userId: number) => {
-    axios
+    /* axios
       .delete(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`, {
         withCredentials: true,
         headers: {
           "API-KEY": "cf030fe2-6f9a-49e8-86a7-893fb44b9868",
         },
-      })
-      .then(() => this.props.unfollowUser(userId));
+      }) */
+      API.unfollow(userId).then((res) => {
+        if (res.data.resultCode === 0) {
+        this.props.unfollowUser(userId)
+        }
+      });
   };
 
   render() {

@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 import { Dispatch } from "redux";
 import { AppState } from "../../redux/reducers";
 import { addPost, PostsType, setUserAC, UserType } from "../../redux/reducers/profileReducer";
@@ -12,6 +13,9 @@ type ProfileProps = {
 
 const ProfileContainer = (props: ProfileProps) => {
     const [postText, setPostText] = useState('');
+    
+    const isAuth = useSelector<AppState>(state => state.auth.isAuth)
+
 
   const onAddPostClick = () => {
     props.addPost({id: (props.posts.length + 1), message: postText, likes: 0});
@@ -20,6 +24,8 @@ const ProfileContainer = (props: ProfileProps) => {
 
   const onTextareaChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPostText(e.currentTarget.value)}
+
+    if(!isAuth) return <Navigate to='/login'/>
 
     return (
         <Profile postText={postText} onAddPostClick={onAddPostClick} 

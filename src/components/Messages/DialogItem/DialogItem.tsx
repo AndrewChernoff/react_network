@@ -1,4 +1,6 @@
-import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Navigate, useLocation } from "react-router-dom";
+import { AppState } from "../../../redux/reducers";
 
 const DialogItem = () => {
 
@@ -6,7 +8,10 @@ const DialogItem = () => {
     const { state } = location;
 
 
-    console.log(location)
+    const isAuth = useSelector<AppState>(state => state.auth.isAuth)
+
+    if(!isAuth) return <Navigate to='login'/>
+
 
     return <div>
         You are at {state.userName} profile

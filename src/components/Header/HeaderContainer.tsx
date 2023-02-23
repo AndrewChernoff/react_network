@@ -1,5 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
+import { AnyAction } from "redux"
+import { ThunkDispatch } from "redux-thunk"
 import { AppState } from "../../redux/reducers"
 import { setUserAuthorizedUserThunk } from "../../redux/reducers/authReducer"
 import Header from "./Header"
@@ -32,7 +34,7 @@ const mapStateToProps = (state: AppState): MapStateType => {
     }
 }
 
-const mapDispatchToProps = (dispatch: any): MapDispatchType => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<AppState, any, AnyAction> ): MapDispatchType => {
     return {
         setUserAuthorizedUser: () => dispatch(setUserAuthorizedUserThunk())
     }

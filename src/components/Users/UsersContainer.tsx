@@ -1,4 +1,5 @@
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 import { Dispatch } from "redux";
 import { AppState } from "../../redux/reducers";
 import {
@@ -36,6 +37,12 @@ type MapDispatchType = {
 };
 
 const UsersContainer = (props: any) => {
+
+  const isAuth = useSelector<AppState>(state => state.auth.isAuth)
+
+    if(!isAuth) return <Navigate to='/login'/>
+
+
   return (
     <UsersAPI
       getUsers={props.getUsers}

@@ -45,7 +45,11 @@ export const setUserAuthorizedUserAC = ({id, email, login}: AuthDataType) => ({t
 
 export const setUserAuthorizedUserThunk = () => (dispatch: Dispatch) => {
     API.authMe()
-    .then(data => dispatch(setUserAuthorizedUserAC(data.data)))
+    .then(data => {
+        if (data.resultCode === 0) {    
+            dispatch(setUserAuthorizedUserAC(data.data))}
+        }
+    )
 }
 
 export default authReducer;

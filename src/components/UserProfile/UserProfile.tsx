@@ -1,11 +1,13 @@
 import axios from "axios"
 import { useEffect } from "react"
-import { connect } from "react-redux"
-import { useParams } from "react-router-dom"
+import { connect, useSelector } from "react-redux"
+import { Navigate, useParams } from "react-router-dom"
 import { Loader } from "../../common/Loader"
 import { AppState } from "../../redux/reducers"
 import { setUser, UserType } from "../../redux/reducers/profileReducer"
 import userAva from "../../imgs/user.png"
+import { ThunkDispatch } from "redux-thunk"
+import { AnyAction } from "redux"
 
 type UserProfileType = {
     setUser: (id: number) => void
@@ -13,6 +15,7 @@ type UserProfileType = {
 }
 
 const UserProfile = ({userProfile, setUser} : UserProfileType) => {
+  const isAuth = useSelector<AppState>(state => state.auth.isAuth)
 
     const params = useParams() as any
       
@@ -22,6 +25,8 @@ const UserProfile = ({userProfile, setUser} : UserProfileType) => {
       }, [])
 
       console.log(userProfile);
+
+      if(!isAuth) <Navigate to='login'/>
 
       if(!userProfile) {
         return <Loader />
@@ -49,7 +54,7 @@ type MapStateType = {
     setUser: (id: number) => void
   }
   
-  const mapDispatchToProps = (dispatch: any): MapDispatchType => {
+  const mapDispatchToProps = (dispatch: ThunkDispatch<AppState, any, AnyAction>): MapDispatchType => {
     return {
         setUser: (id) => {
             dispatch(setUser(id))

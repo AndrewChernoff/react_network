@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import logo from "../../imgs/logo.png";
 import s from "./Header.module.scss";
 
@@ -32,7 +33,7 @@ const Header = ({ isAuth, userId }: HeaderType) => {
       <img src={logo} className={s.header__logo} alt="logo" />
       <div className={s.user}>
         {userAva ? <img className={s.user__ava} src={userAva} alt='user ava'/> : null }
-        {isAuth? <button className={s.btn}>Logout</button> : <button className={s.btn}>Login</button>}
+        {isAuth? <button className={s.btn}>Logout</button> : <NavLink to='login' className={s.btn}>Login</NavLink>}
       </div>
     </div>
   );

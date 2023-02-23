@@ -2,32 +2,23 @@ import axios from "axios"
 import { useEffect } from "react"
 import { connect } from "react-redux"
 import { useParams } from "react-router-dom"
-import { Dispatch } from "redux"
 import { Loader } from "../../common/Loader"
 import { AppState } from "../../redux/reducers"
-import { setUserAC, UserType } from "../../redux/reducers/profileReducer"
+import { setUser, UserType } from "../../redux/reducers/profileReducer"
 import userAva from "../../imgs/user.png"
 
 type UserProfileType = {
-    setUser: (obj: UserType) => void
+    setUser: (id: number) => void
     userProfile: UserType
 }
 
 const UserProfile = ({userProfile, setUser} : UserProfileType) => {
 
     const params = useParams() as any
-
-    const getData = async (userId: number) => {
-        const { data } = await axios.get(
-          `https://social-network.samuraijs.com/api/1.0//profile/${userId}`
-        );
-        return await data;
-      };
       
         useEffect(() => {
-        getData(params.id)
-        .then(data => setUser(data)
-        )
+          setUser(params.id)
+        
       }, [])
 
       console.log(userProfile);
@@ -55,13 +46,13 @@ type MapStateType = {
   })
 
  type MapDispatchType = {
-    setUser: (obj: any) => void
+    setUser: (id: number) => void
   }
   
-  const mapDispatchToProps = (dispatch: Dispatch): MapDispatchType => {
+  const mapDispatchToProps = (dispatch: any): MapDispatchType => {
     return {
-        setUser: (obj): void => {
-            dispatch(setUserAC(obj))
+        setUser: (id) => {
+            dispatch(setUser(id))
         }
     }
   };

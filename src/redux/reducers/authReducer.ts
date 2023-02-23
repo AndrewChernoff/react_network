@@ -1,3 +1,6 @@
+import { Dispatch } from "redux"
+import API from "../../services/API"
+
 const SET_USER = "SET_USER"
 
 type SetUserType = ReturnType<typeof setUserAuthorizedUserAC>
@@ -39,5 +42,10 @@ const authReducer = (state = initialState, action: Action): AuthState => {
 };
 
 export const setUserAuthorizedUserAC = ({id, email, login}: AuthDataType) => ({type: SET_USER, payload: {id, email, login}}) as const
+
+export const setUserAuthorizedUserThunk = () => (dispatch: Dispatch) => {
+    API.authMe()
+    .then(data => dispatch(setUserAuthorizedUserAC(data.data)))
+}
 
 export default authReducer;

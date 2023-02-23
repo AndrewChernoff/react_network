@@ -1,10 +1,7 @@
-import axios from "axios"
 import React from "react"
 import { connect } from "react-redux"
-import { Dispatch } from "redux"
 import { AppState } from "../../redux/reducers"
-import { AuthDataType, setUserAuthorizedUserAC } from "../../redux/reducers/authReducer"
-import API from "../../services/API"
+import { setUserAuthorizedUserThunk } from "../../redux/reducers/authReducer"
 import Header from "./Header"
 
 type MapStateType = {
@@ -13,27 +10,14 @@ type MapStateType = {
 }
 
 type MapDispatchType = {
-    setUserAuthorizedUser: (obj:AuthDataType) => void
+    setUserAuthorizedUser: () => void
 }
 
 type PropsType = MapDispatchType & MapStateType
 
 class HeaderContainer extends React.Component<PropsType>  {
-    constructor(props: PropsType) {
-        super(props);
-        this.state = {userId: null};
-      }
-
     componentDidMount(): void {
-        API.authMe()
-        .then(data => this.props.setUserAuthorizedUser(data.data))
-        .then(() => {
-            if(this.props.id) {
-                this.setState({
-                    userId: this.props.id
-                  });
-            }
-        })
+        this.props.setUserAuthorizedUser()
     }
 
    render() {
@@ -48,9 +32,9 @@ const mapStateToProps = (state: AppState): MapStateType => {
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchType => {
+const mapDispatchToProps = (dispatch: any): MapDispatchType => {
     return {
-        setUserAuthorizedUser: (obj) => dispatch(setUserAuthorizedUserAC(obj))
+        setUserAuthorizedUser: () => dispatch(setUserAuthorizedUserThunk())
     }
 }
 

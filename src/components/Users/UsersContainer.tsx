@@ -2,12 +2,16 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { AppState } from "../../redux/reducers";
 import {
+  followUser,
   followUserAC,
+  getUsers,
   getUsersAC,
+  getUsersOnPageClick,
   setCurrentPageAC,
   setFetchingAC,
   setFollowingInProgressAC,
   setTotalCountAC,
+  unFollowUser,
   unfollowUserAC,
   UsersType,
 } from "../../redux/reducers/usersReducer";
@@ -36,17 +40,14 @@ const UsersContainer = (props: any) => {
     <UsersAPI
       getUsers={props.getUsers}
       users={props.users}
-      setTotalCount={props.setTotalCount}
       currentPage={props.currentPage}
       pageSize={props.pageSize}
       totalCount={props.totalCount}
-      setCurrentPage={props.setCurrentPage}
       followUser={props.followUser}
-      unfollowUser={props.unfollowUser}
-      setFetching={props.setFetching}
+      unFollowUser={props.unFollowUser}
       isFetching={props.isFetching}
-      setFollowingInProgress={props.setFollowingInProgress}
       followingInProgress={props.followingInProgress}
+      getUsersOnPageClick={props.getUsersOnPageClick}
     />
   );
 };
@@ -71,11 +72,8 @@ const mapStateToProps = (state: AppState): MapStateType => ({
   };
 };*/
 export default connect(mapStateToProps, {
-  getUsers: getUsersAC,
-  setTotalCount: setTotalCountAC,
-  setCurrentPage: setCurrentPageAC,
-  followUser: followUserAC,
-  unfollowUser: unfollowUserAC,
-  setFetching: setFetchingAC,
-  setFollowingInProgress: setFollowingInProgressAC
+  getUsers: getUsers,
+  getUsersOnPageClick: getUsersOnPageClick,
+  followUser: followUser,
+  unFollowUser: unFollowUser,
 })(UsersContainer);

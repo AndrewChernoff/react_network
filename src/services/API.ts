@@ -29,7 +29,14 @@ const API = {
   authMe: async() => {
     const {data} = await instance.get(`auth/me`)
     return await data
-  }, 
+  },
+  
+  getProfile: async(userId: number) => {
+    const {data} = await instance.get(
+      `profile/${userId}`
+    )
+    return await data
+  }
 };
 
 export default API

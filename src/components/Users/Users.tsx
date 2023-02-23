@@ -2,37 +2,22 @@ import { UsersType } from "../../redux/reducers/usersReducer";
 import userAva from "../../imgs/user.png";
 import s from "./Users.module.scss";
 import { NavLink } from "react-router-dom";
-import axios from "axios";
 import React from "react";
-import API from "../../services/API";
 
 type UsersProps = {
   users: UsersType[]
   followUser: (id: number) => void
-  unfollowUser: (id: number) => void
-  setFollowingInProgress: (fetching: boolean, userId: number) => void
+  unFollowUser: (id: number) => void
   followingInProgress: number[]
 };
 
 class Users extends React.Component<UsersProps> {
   onFollowClick = (userId: number) => {
-    this.props.setFollowingInProgress(true, userId)
-      API.follow(userId).then((res) => {
-        if (res.data.resultCode === 0) {
-          this.props.followUser(userId);
-        }
-        this.props.setFollowingInProgress(false, userId)
-      });
+    this.props.followUser(userId)
   };
 
   onUnFollowClick = (userId: number) => {
-    this.props.setFollowingInProgress(true, userId)
-      API.unfollow(userId).then((res) => {
-        if (res.data.resultCode === 0) {
-        this.props.unfollowUser(userId)
-        }
-        this.props.setFollowingInProgress(false, userId)
-      });
+    this.props.unFollowUser(userId)
   };
 
   render() {

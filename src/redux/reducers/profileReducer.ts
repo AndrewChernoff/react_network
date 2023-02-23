@@ -1,3 +1,6 @@
+import { Dispatch } from "redux"
+import API from "../../services/API"
+
 const ADD_POST = "ADD_POST"
 const SET_USER = "SET_USER"
 
@@ -55,5 +58,11 @@ const profileReducer = (state = initialState, action: ActionType): ProfileState 
 
 export const addPost = (payload: PostsType) => ({type: ADD_POST, payload}) as const
 export const setUserAC = (user: PostsType) => ({type: SET_USER, user}) as const
+
+export const setUser = (userId: number) => (dispatch: Dispatch) => {
+  API.getProfile(userId)
+        .then(data => dispatch(setUserAC(data))
+        )
+}
 
 export default profileReducer;

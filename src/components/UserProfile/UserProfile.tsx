@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useEffect } from "react"
+import { ComponentType, useEffect } from "react"
 import { connect, useSelector } from "react-redux"
 import { Navigate, useParams } from "react-router-dom"
 import { Loader } from "../../common/Loader"
@@ -7,7 +7,7 @@ import { AppState } from "../../redux/reducers"
 import { setUser, UserType } from "../../redux/reducers/profileReducer"
 import userAva from "../../imgs/user.png"
 import { ThunkDispatch } from "redux-thunk"
-import { AnyAction } from "redux"
+import { AnyAction, compose } from "redux"
 import { withAuthRedirect } from "../../HOC/WithAuthRedirect"
 
 type UserProfileType = {
@@ -63,7 +63,7 @@ type MapStateType = {
     }
   };
   
-  const connector = connect(mapState, mapDispatchToProps)
-  
-
-  export default connector(withAuthRedirect(UserProfile))
+  export default compose<ComponentType>(
+    connect(mapState, mapDispatchToProps),
+    withAuthRedirect
+    )(UserProfile)

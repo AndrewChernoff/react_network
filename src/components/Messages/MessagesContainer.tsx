@@ -1,8 +1,8 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, ComponentType, useState } from "react";
 import { connect } from "react-redux";
 import Messages from "./Messages";
 import { DialogType, MessageType, sendMessage,} from "../../redux/reducers/messagesReducer";
-import { Dispatch } from "redux";
+import { compose, Dispatch } from "redux";
 import { AppState } from "../../redux/reducers";
 import { Navigate } from "react-router-dom";
 import { withAuthRedirect } from "../../HOC/WithAuthRedirect";
@@ -49,6 +49,11 @@ type MapDispatchType = {
       }};
   };
   
-  const connector = connect(mapState, mapDispatch);
+  /* const connector = connect(mapState, mapDispatch);
 
-export default connector(withAuthRedirect(MessagesContainer))
+export default connector(withAuthRedirect(MessagesContainer)) */
+
+export default compose<ComponentType>(
+  connect(mapState, mapDispatch),
+  withAuthRedirect
+  )(MessagesContainer)

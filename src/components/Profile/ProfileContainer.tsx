@@ -1,7 +1,7 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, ComponentType, useState } from "react";
 import { connect, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { Dispatch } from "redux";
+import { compose, Dispatch } from "redux";
 import { withAuthRedirect } from "../../HOC/WithAuthRedirect";
 import { AppState } from "../../redux/reducers";
 import { addPost, PostsType, setUserAC, UserType } from "../../redux/reducers/profileReducer";
@@ -58,4 +58,7 @@ export type MapStateType = {
     }
   };
   
-  export default connect(mapState, mapDispatchToProps) (withAuthRedirect(ProfileContainer))
+export default compose<ComponentType>(
+    withAuthRedirect,
+    connect(mapState, mapDispatchToProps),
+  ) (ProfileContainer)

@@ -1,5 +1,7 @@
+import { ComponentType } from "react";
 import { connect, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { compose } from "redux";
 import { withAuthRedirect } from "../../HOC/WithAuthRedirect";
 import { AppState } from "../../redux/reducers";
 import {
@@ -71,9 +73,19 @@ const mapStateToProps = (state: AppState): MapStateType => ({
     setFetching: (isFetching) => dispatch(setFetchingAC(isFetching)),
   };
 };*/
-export default connect(mapStateToProps, {
+/*  export const default connect(mapStateToProps, {
   getUsers: getUsers,
   getUsersOnPageClick: getUsersOnPageClick,
   followUser: followUser,
   unFollowUser: unFollowUser,
-})(withAuthRedirect(UsersContainer));
+})(withAuthRedirect(UsersContainer)); */
+
+
+export default compose<ComponentType>( connect(mapStateToProps, {
+  getUsers: getUsers,
+  getUsersOnPageClick: getUsersOnPageClick,
+  followUser: followUser,
+  unFollowUser: unFollowUser,
+}), 
+  withAuthRedirect
+)(UsersContainer)

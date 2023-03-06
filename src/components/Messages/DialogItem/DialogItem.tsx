@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
+import { withAuthRedirect } from "../../../HOC/WithAuthRedirect";
 import { AppState } from "../../../redux/reducers";
 
 const DialogItem = () => {
@@ -8,14 +9,14 @@ const DialogItem = () => {
     const { state } = location;
 
 
-    const isAuth = useSelector<AppState>(state => state.auth.isAuth)
+   /*  const isAuth = useSelector<AppState>(state => state.auth.isAuth)
 
     if(!isAuth) return <Navigate to='login'/>
-
+ */
 
     return <div>
         You are at {state.userName} profile
     </div>
 } 
 
-export default DialogItem;
+export default withAuthRedirect(DialogItem);

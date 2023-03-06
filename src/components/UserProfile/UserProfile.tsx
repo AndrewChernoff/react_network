@@ -8,6 +8,7 @@ import { setUser, UserType } from "../../redux/reducers/profileReducer"
 import userAva from "../../imgs/user.png"
 import { ThunkDispatch } from "redux-thunk"
 import { AnyAction } from "redux"
+import { withAuthRedirect } from "../../HOC/WithAuthRedirect"
 
 type UserProfileType = {
     setUser: (id: number) => void
@@ -15,7 +16,7 @@ type UserProfileType = {
 }
 
 const UserProfile = ({userProfile, setUser} : UserProfileType) => {
-  const isAuth = useSelector<AppState>(state => state.auth.isAuth)
+  //const isAuth = useSelector<AppState>(state => state.auth.isAuth)
 
     const params = useParams() as any
       
@@ -26,7 +27,7 @@ const UserProfile = ({userProfile, setUser} : UserProfileType) => {
 
       console.log(userProfile);
 
-      if(!isAuth) <Navigate to='login'/>
+      //if(!isAuth) <Navigate to='login'/>
 
       if(!userProfile) {
         return <Loader />
@@ -43,7 +44,7 @@ const UserProfile = ({userProfile, setUser} : UserProfileType) => {
     </div>
 }
 type MapStateType = {
-    userProfile: UserType///
+    userProfile: UserType
   }
   
   const mapState = (state: AppState): MapStateType => ({
@@ -65,4 +66,4 @@ type MapStateType = {
   const connector = connect(mapState, mapDispatchToProps)
   
 
-  export default connector(UserProfile)
+  export default connector(withAuthRedirect(UserProfile))

@@ -2,11 +2,12 @@ import { ChangeEvent, useState } from "react";
 import { connect, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { Dispatch } from "redux";
+import { withAuthRedirect } from "../../HOC/WithAuthRedirect";
 import { AppState } from "../../redux/reducers";
 import { addPost, PostsType, setUserAC, UserType } from "../../redux/reducers/profileReducer";
 import Profile from "./Profile";
 
-type ProfileProps = {
+export type ProfileProps = {
     posts: PostsType[],
     addPost: (obj: {id: number, message: string, likes: number}) => void
   }
@@ -14,18 +15,18 @@ type ProfileProps = {
 const ProfileContainer = (props: ProfileProps) => {
     const [postText, setPostText] = useState('');
     
-    const isAuth = useSelector<AppState>(state => state.auth.isAuth)
+    //const isAuth = useSelector<AppState>(state => state.auth.isAuth)
 
 
-  const onAddPostClick = () => {
-    props.addPost({id: (props.posts.length + 1), message: postText, likes: 0});
-    setPostText('');
-  }
+    const onAddPostClick = () => {
+      props.addPost({id: (props.posts.length + 1), message: postText, likes: 0});
+      setPostText('');
+    }
 
   const onTextareaChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPostText(e.currentTarget.value)}
 
-    if(!isAuth) return <Navigate to='/login'/>
+    //if(!isAuth) return <Navigate to='/login'/>
 
     return (
         <Profile postText={postText} onAddPostClick={onAddPostClick} 
@@ -35,9 +36,9 @@ const ProfileContainer = (props: ProfileProps) => {
     )
 }
 
- type MapStateType = {
+export type MapStateType = {
     posts: PostsType[]
-    user: UserType///
+    user: UserType
   }
   
   const mapState = (state: AppState): MapStateType => ({
@@ -45,7 +46,7 @@ const ProfileContainer = (props: ProfileProps) => {
     user: state.profile.user
   })
 
- type MapDispatchType = {
+ export type MapDispatchType = {
     addPost: (obj: PostsType) => void
   }
   
@@ -57,7 +58,4 @@ const ProfileContainer = (props: ProfileProps) => {
     }
   };
   
-  const connector = connect(mapState, mapDispatchToProps)
-  
-
-  export default connector(ProfileContainer)
+  export default connect(mapState, mapDispatchToProps) (withAuthRedirect(ProfileContainer))

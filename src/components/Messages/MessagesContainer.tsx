@@ -5,6 +5,7 @@ import { DialogType, MessageType, sendMessage,} from "../../redux/reducers/messa
 import { Dispatch } from "redux";
 import { AppState } from "../../redux/reducers";
 import { Navigate } from "react-router-dom";
+import { withAuthRedirect } from "../../HOC/WithAuthRedirect";
 
 type MessagesPropsType = MapStateType & MapDispatchType
 
@@ -20,7 +21,7 @@ const MessagesContainer = (props: MessagesPropsType) => {
   setMessage(e.currentTarget.value)
   }
   
-  if(props.isAuth === false) return <Navigate to='/login'/>
+  //if(props.isAuth === false) return <Navigate to='/login'/>
 
   return <Messages onSendClick={onSendClick} message={message} messages={props.messages} dialogs={props.dialogs} onChangeHandler={onChangeHandler}/>
 }
@@ -28,13 +29,13 @@ const MessagesContainer = (props: MessagesPropsType) => {
 type MapStateType = {
     dialogs: DialogType[]
     messages: MessageType[]
-    isAuth: boolean
+    //isAuth: boolean
   };
   
   const mapState = (state: AppState): MapStateType => ({
     dialogs: state.dialogsPage.dialogs,
     messages: state.dialogsPage.messages,
-    isAuth: state.auth.isAuth
+    //isAuth: state.auth.isAuth
   });
 
 type MapDispatchType = {
@@ -50,4 +51,4 @@ type MapDispatchType = {
   
   const connector = connect(mapState, mapDispatch);
 
-export default connector(MessagesContainer)
+export default connector(withAuthRedirect(MessagesContainer))

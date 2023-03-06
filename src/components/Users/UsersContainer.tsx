@@ -1,19 +1,12 @@
 import { connect, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { Dispatch } from "redux";
+import { withAuthRedirect } from "../../HOC/WithAuthRedirect";
 import { AppState } from "../../redux/reducers";
 import {
   followUser,
-  followUserAC,
   getUsers,
-  getUsersAC,
   getUsersOnPageClick,
-  setCurrentPageAC,
-  setFetchingAC,
-  setFollowingInProgressAC,
-  setTotalCountAC,
   unFollowUser,
-  unfollowUserAC,
   UsersType,
 } from "../../redux/reducers/usersReducer";
 import UsersAPI from "./UsersAPI";
@@ -38,9 +31,9 @@ type MapDispatchType = {
 
 const UsersContainer = (props: any) => {
 
-  const isAuth = useSelector<AppState>(state => state.auth.isAuth)
+  /* const isAuth = useSelector<AppState>(state => state.auth.isAuth)
 
-    if(!isAuth) return <Navigate to='/login'/>
+    if(!isAuth) return <Navigate to='/login'/> */
 
 
   return (
@@ -83,4 +76,4 @@ export default connect(mapStateToProps, {
   getUsersOnPageClick: getUsersOnPageClick,
   followUser: followUser,
   unFollowUser: unFollowUser,
-})(UsersContainer);
+})(withAuthRedirect(UsersContainer));

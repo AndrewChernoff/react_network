@@ -36,7 +36,21 @@ const API = {
       `profile/${userId}`
     )
     return await data
-  }
+  },
+
+  getStatus: async(userId: number) => {
+    const {data} = await instance.get(
+      `profile/status/${userId}`
+    )
+    return await data
+  },
+
+  updateStatus: async(status: string) => {
+    const {data} = await instance.put(
+      `profile/status`, {status}
+    )
+    return await data
+  },
 };
 
 export default API

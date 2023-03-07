@@ -8,6 +8,10 @@ import ProfileInfo from "./ProfileInfo";
   postText: string
   onTextareaChange: (value: any) => void
   onAddPostClick: () => void
+  authId: number | null
+  profile: UserType
+  status: string
+  updateStatus: (status: string) => void
 }
 
 const Profile = (props: ProfileProps) => {
@@ -15,7 +19,7 @@ const Profile = (props: ProfileProps) => {
   return (
     <div className={s.profile}>
       <div className={s.profile__container}>
-        <ProfileInfo />
+        <ProfileInfo authId={props.authId} profile={props.profile} status={props.status} updateStatus={props.updateStatus}/>
 
         <div className={s.profile__post}>
           <textarea value={props.postText} onChange={props.onTextareaChange}
@@ -24,7 +28,7 @@ const Profile = (props: ProfileProps) => {
         </div>
         {
             props.posts.map((el) => {
-                return <PostItem key={el.id} message={el.message} likes={el.likes} />
+                return <PostItem key={el.id} message={el.message} likes={el.likes}/>
             })
         }
       </div>

@@ -16,7 +16,6 @@ type UserProfileType = {
 }
 
 const UserProfile = ({userProfile, setUser} : UserProfileType) => {
-  //const isAuth = useSelector<AppState>(state => state.auth.isAuth)
 
     const params = useParams() as any
       
@@ -24,10 +23,6 @@ const UserProfile = ({userProfile, setUser} : UserProfileType) => {
           setUser(params.id)
         
       }, [])
-
-      console.log(userProfile);
-
-      //if(!isAuth) <Navigate to='login'/>
 
       if(!userProfile) {
         return <Loader />

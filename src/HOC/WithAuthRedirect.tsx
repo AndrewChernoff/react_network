@@ -20,26 +20,3 @@ type MapStateType = {
         isAuth: state.auth.isAuth
     }
 }
-
-
-
-
-
-
-
-/* 
-
-export function withAuthRedirect<T>(Component: ComponentType<T>) {
-
-    const RedirectedComponent = (props: MapStateType) => {
-        if(!props.isAuth) return <Navigate to='/login'/>
-
-        return <Component {...props as any}/>
-    }
-
-    return connect(mapStatetoProps)(RedirectedComponent)
-}
-
-
-} */
-

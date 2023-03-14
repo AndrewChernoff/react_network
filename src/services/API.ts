@@ -51,6 +51,20 @@ const API = {
     )
     return await data
   },
+
+  login: async(obj: any) => {
+    const {data} = await instance.post(
+      `auth/login`, obj
+    )
+    return await data
+  },
+
+  logout: async() => {
+    const {data} = await instance.delete(
+      `auth/login`
+    )
+    return await data
+  },
 };
 
 export default API

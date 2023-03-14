@@ -2,14 +2,16 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../../imgs/logo.png";
+import API from "../../services/API";
 import s from "./Header.module.scss";
 
 type HeaderType = {
   isAuth: boolean
   userId: number | null
+  logOut: () => void
 };
 
-const Header = ({ isAuth, userId }: HeaderType) => {
+const Header = ({ isAuth, userId, logOut }: HeaderType) => {
     const [userAva, setUserAva] = useState<null|string>(null)
 
     const getData = async (id: number) => {
@@ -23,9 +25,11 @@ const Header = ({ isAuth, userId }: HeaderType) => {
         if(userId) {
         getData(userId)
         .then(data => setUserAva(data.photos.small)
-        )
+        )   
     }
-      }, [userId])
+      !isAuth && setUserAva(null)
+
+      }, [userId, isAuth])
 
 
   return (
@@ -33,7 +37,7 @@ const Header = ({ isAuth, userId }: HeaderType) => {
       <img src={logo} className={s.header__logo} alt="logo" />
       <div className={s.user}>
         {userAva ? <img className={s.user__ava} src={userAva} alt='user ava'/> : null }
-        {isAuth? <button className={s.btn}>Logout</button> : <NavLink to='login' className={s.btn}>Login</NavLink>}
+        {isAuth? <button className={s.btn} onClick={() => logOut()}>Logout</button> : <NavLink to='login' className={s.btn}>Login</NavLink>}
       </div>
     </div>
   );

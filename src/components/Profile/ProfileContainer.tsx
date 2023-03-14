@@ -4,21 +4,12 @@ import { AnyAction, compose, Dispatch } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 import { withAuthRedirect } from "../../HOC/WithAuthRedirect";
 import { AppState } from "../../redux/reducers";
-import { addPost, PostsType, setUser, setUserAC, setUserStatus, updateStatus, UserType } from "../../redux/reducers/profileReducer";
-import API from "../../services/API";
+import { addPost, PostsType, setUser, setUserStatus, updateStatus, UserType } from "../../redux/reducers/profileReducer";
 import Profile from "./Profile";
 
-/* export type ProfileProps = {
-    posts: PostsType[],
-    addPost: (obj: {id: number, message: string, likes: number}) => void
-    authId: number
-  } */
-
- type PropsType = MapStateType & MapDispatchType
+type PropsType = MapStateType & MapDispatchType
 
 const ProfileContainer = (props: PropsType) => {
-    const [postText, setPostText] = useState('');
-    
 
     useEffect(() => {
       if(props.authId) {
@@ -27,17 +18,12 @@ const ProfileContainer = (props: PropsType) => {
       }
     }, [])
 
-    const onAddPostClick = () => {
-      props.addPost({id: (props.posts.length + 1), message: postText, likes: 0});
-      setPostText('');
+    const onAddPostClick = (value: string) => {
+      props.addPost({id: (props.posts.length + 1), message: value, likes: 0});
     }
 
-  const onTextareaChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPostText(e.currentTarget.value)}
-
     return (
-        <Profile postText={postText} onAddPostClick={onAddPostClick} 
-        onTextareaChange={onTextareaChange} 
+        <Profile onAddPostClick={onAddPostClick} 
         posts={props.posts}
         profile={props.user}
         authId={props.authId}

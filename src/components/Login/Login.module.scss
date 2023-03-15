@@ -1,9 +1,20 @@
-/* form {
-	margin-right: auto;
-	margin-left: auto;
-	width: 260px;
-	padding: 40px;
-} */
+@mixin inputStyle {
+	width: 30%;
+	height: 42px;
+	border-radius: 5px;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	font-size: inherit;
+	font-family: inherit;
+	padding-right: 15px;
+	padding-left: 15px;
+	&::placeholder {
+		color: rgb(175, 175, 175);
+	}
+	&:focus {
+		border-color: rgb(68, 176, 255);
+	}
+  }
+
 .formRow {
 	margin-bottom: 20px;
 	>label {
@@ -12,37 +23,25 @@
 	}
 }
 .input[type="text"] {
-	width: 30%;
-	height: 42px;
-	border-radius: 5px;
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	font-size: inherit;
-	font-family: inherit;
-	padding-right: 15px;
-	padding-left: 15px;
-	&::placeholder {
-		color: rgb(175, 175, 175);
-	}
-	&:focus {
-		border-color: rgb(68, 176, 255);
-	}
+	@include inputStyle;
 }
 
 .input[type="email"], .input[type="password"] {
-	width: 30%;
-	height: 42px;
-	border-radius: 5px;
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	font-size: inherit;
-	font-family: inherit;
-	padding-right: 15px;
-	padding-left: 15px;
-	&::placeholder {
-		color: rgb(175, 175, 175);
-	}
-	&:focus {
-		border-color: rgb(68, 176, 255);
-	}
+	@include inputStyle;
+}
+
+.errorPasswordInput {
+	@include inputStyle;
+	border: red 2px solid;
+}
+
+.errorInput{
+	@include inputStyle;
+	border: red 2px solid;
+
+}
+.errorBlock {
+	color: red;
 }
 
 .btn {

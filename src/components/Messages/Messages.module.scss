@@ -18,4 +18,10 @@
         display: grid;
         gap: 15px;
     }
+    .errorTextarea{
+        border: red 2px solid;
+    }
+    .errorBlock {
+        color: red;
+    }
 }

@@ -1,5 +1,4 @@
-import { Field, Form, Formik, FormikHelpers } from "formik";
-import { FormEvent, useState } from "react";
+import { Form, Formik, FormikHelpers } from "formik";
 import FormControl from "../../common/FormControl/FormControl";
 import { PostsType, UserType } from "../../redux/reducers/profileReducer";
 import PostItem from "../PostItem/PostItem";
@@ -68,16 +67,9 @@ const AddPostItemFrom = ({callback}: AddPostItemFromType) => {
 
 {({ errors }) => (
   <Form>
-   {/*  <Field
-      name="postValue"
-      placeholder="Type your post"
-      type="text"
-      component='textarea'
-      validate={validateFormItem}
-    /> */}
     <FormControl varlidationCallback={validateFormItem} 
-    componentType={'textarea'} placeholder={'Type your post'} name={'postValue'}/>
-    {errors.postValue && <div>{errors.postValue}</div>}
+    componentType={'textarea'} placeholder={'Type your post'} name={'postValue'} type={'text'} className={errors.postValue? s.errorTextarea : ''}/>
+    {errors.postValue && <div className={s.errorBlock}>{errors.postValue}</div>}
 
     <button type="submit" disabled={errors.postValue ? true : false}>Add post</button>
   </Form>

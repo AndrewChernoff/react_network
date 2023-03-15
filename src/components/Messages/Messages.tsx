@@ -1,6 +1,4 @@
 import { Field, Formik, Form, FormikHelpers } from "formik";
-import { ChangeEvent, useState } from "react";
-import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import FormControl from "../../common/FormControl/FormControl";
 import {
@@ -80,16 +78,9 @@ const AddPostItemFrom = ({callback}: AddPostItemFromType) => {
   }}
 >
 {({ errors }) => (<Form>
-    {/* <Field
-      name="message"
-      placeholder="Type your message"
-      type="text"
-      component='textarea'
-      validate={validateFormItem}
-    /> */}
     <FormControl varlidationCallback={validateFormItem} 
-    componentType={'textarea'} placeholder={'Type your message'} name={'message'}/>
-    {errors.message && <div>{errors.message}</div>}
+    componentType={'textarea'} placeholder={'Type your message'} name={'message'} type={'text'} className={errors.message? s.errorTextarea : ''}/>
+    {errors.message && <div className={s.errorBlock}>{errors.message}</div>}
 
     <button type="submit" disabled={errors.message ? true : false}>Send</button>
   </Form>

@@ -1,6 +1,7 @@
 import { Field, Form, Formik, FormikHelpers } from "formik";
-import { useDispatch } from "react-redux";
-import { AnyAction } from "redux";
+import { useDispatch, useSelector } from "react-redux";
+import FormControl from "../../common/FormControl/FormControl";
+import { AppState } from "../../redux/reducers";
 import { logIn } from "../../redux/reducers/authReducer";
 import s from './Login.module.scss'
 
@@ -12,9 +13,10 @@ interface Values {
 
   const Login = () => {
 
+    const loginError = useSelector<AppState, boolean>(state => state.auth.loginError)
     const dispatch = useDispatch<any>()
 
-    function validateEmail(value: string) {
+    function validateEmail(value: string) {      
       let error;
       if (!value) {
         error = 'Required';
@@ -33,16 +35,9 @@ interface Values {
       return error;
     }
     
-/*     function validateUsername(value: string) {
-      let error;
-      if (value === 'admin') {
-        error = 'Nice try!';
-      }
-      return error;
-    } */
     return  (
         <div>
-          <h1>Log in</h1>
+          <h2>Log in</h2>
           <Formik
             initialValues={{
               password: '',
@@ -63,26 +58,33 @@ interface Values {
             <Form>
             <div className={s.formRow}>
               <label htmlFor="email">Email</label>
-              <Field
+              <FormControl name="email"
                 id="email"
-                name="email"
                 placeholder="john@acme.com"
                 type="email"
-                validate={validateEmail}
-                className={s.input}
-              />
-              {errors.email && touched.email && <div>{errors.email}</div>}
+                varlidationCallback={validateEmail}
+                componentType={'input'}
+                className={errors.email && touched.email ? s.errorInput : s.input}/>
+              {errors.email && touched.email && <div className={s.errorBlock}>{errors.email}</div>}
               </div>
-            <label htmlFor="password">Password</label>
               
             <div className={s.formRow}>
-              <Field id="password" name="password" placeholder="Password" type="password" validate={validatePassword} className={s.input}/>
-              {errors.password && touched.password && <div>{errors.password}</div>}
+              <label htmlFor="password">Password</label>
+              <FormControl name="password"
+                id="password"
+                placeholder="Password"
+                type="Password"
+                varlidationCallback={validatePassword}
+                componentType={'input'}
+                className={errors.password && touched.password ? s.errorPasswordInput : s.input}/>
+              {errors.password && touched.password && <div className={s.errorBlock}>{errors.password}</div>}
 
             </div>
                 <label htmlFor="rememberMe">Remember me</label>
               <Field id="rememberMe" name="rememberMe"  type="checkbox"/>
               <button type="submit" className={s.btn}>Submit</button>
+              {loginError ? <div className={s.errorBlock}>'Incorrect Email or Password'</div>: null}
+
             </Form>)}
           </Formik>
         </div>

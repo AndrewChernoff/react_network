@@ -8,5 +8,11 @@
             textarea {
                 margin: 5px 0 0 0;
             }
+            .errorTextarea{
+                border: red 2px solid;
+            }
+            .errorBlock {
+                color: red;
+            }
     }
 }

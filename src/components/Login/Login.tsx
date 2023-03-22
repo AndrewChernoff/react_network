@@ -1,5 +1,7 @@
 import { Field, Form, Formik, FormikHelpers } from "formik";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Navigate, useNavigate } from "react-router-dom";
 import FormControl from "../../common/FormControl/FormControl";
 import { AppState } from "../../redux/reducers";
 import { logIn } from "../../redux/reducers/authReducer";
@@ -12,9 +14,17 @@ interface Values {
   }
 
   const Login = () => {
-
+    const isAuth = useSelector<AppState, boolean>(state => state.auth.isAuth)
     const loginError = useSelector<AppState, boolean>(state => state.auth.loginError)
     const dispatch = useDispatch<any>()
+    const navigate = useNavigate();
+
+
+    useEffect(() => {
+      if(isAuth) navigate("/profile");
+    },[isAuth])
+    
+
 
     function validateEmail(value: string) {      
       let error;

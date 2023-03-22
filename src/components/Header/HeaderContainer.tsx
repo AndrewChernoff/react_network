@@ -12,7 +12,7 @@ type MapStateType = {
 }
 
 type MapDispatchType = {
-    setUserAuthorizedUser: () => void
+    //setUserAuthorizedUser: () => void
     logOut: () => void
 }
 
@@ -20,7 +20,7 @@ type PropsType = MapDispatchType & MapStateType
 
 class HeaderContainer extends React.Component<PropsType>  {
     componentDidMount(): void {
-        this.props.setUserAuthorizedUser()
+        //this.props.setUserAuthorizedUser()
     }
 
    render() {
@@ -37,7 +37,7 @@ const mapStateToProps = (state: AppState): MapStateType => {
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<AppState, any, AnyAction> ): MapDispatchType => {
     return {
-        setUserAuthorizedUser: () => dispatch(setUserAuthorizedUserThunk()),
+        //setUserAuthorizedUser: () => dispatch(setUserAuthorizedUserThunk()),
         logOut: () => dispatch(logOut())
     }
 }

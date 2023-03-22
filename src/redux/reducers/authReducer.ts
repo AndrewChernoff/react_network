@@ -66,7 +66,7 @@ export const logoutAC = () => ({type: LOGOUT}) as const
 export const logInErrorAC = (payload: boolean) => ({type: LOGIN_ERROR, payload}) as const
 
 export const setUserAuthorizedUserThunk = () => (dispatch: Dispatch) => {
-    API.authMe()
+  return API.authMe()
     .then(data => {
         if (data.resultCode === 0) {    
             dispatch(setUserAuthorizedUserAC(data.data))}

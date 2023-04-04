@@ -1,4 +1,4 @@
-import { ChangeEvent, ComponentType, useState } from "react";
+import { ComponentType } from "react";
 import { connect } from "react-redux";
 import Messages from "./Messages";
 import { DialogType, MessageType, sendMessage,} from "../../redux/reducers/messagesReducer";
@@ -22,10 +22,13 @@ type MapStateType = {
     messages: MessageType[]
   };
   
-  const mapState = (state: AppState): MapStateType => ({
+  const mapState = (state: AppState): MapStateType => {
+   
+   return {
     dialogs: state.dialogsPage.dialogs,
     messages: state.dialogsPage.messages,
-  });
+   }
+  };
 
 type MapDispatchType = {
   sendMessage: (obj: MessageType) => void

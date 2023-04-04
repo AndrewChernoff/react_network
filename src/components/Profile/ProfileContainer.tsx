@@ -4,12 +4,32 @@ import { AnyAction, compose, Dispatch } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 import { withAuthRedirect } from "../../HOC/WithAuthRedirect";
 import { AppState } from "../../redux/reducers";
-import { addPost, PostsType, setUser, setUserStatus, updateStatus, UserType } from "../../redux/reducers/profileReducer";
+import { addPost, PostsType, setUser, setUserStatus, updateStatus, updateUserInfo, UserType } from "../../redux/reducers/profileReducer";
 import Profile from "./Profile";
+import { UserContactValues } from "./ProfileFormInfo/ProfileFormInfo";
 
 type PropsType = MapStateType & MapDispatchType
 
+export type MapStateType = {
+  posts: PostsType[]
+  user: UserType
+  authId: number | null
+  status: string
+  error: string
+}
+
+export type MapDispatchType = {
+addPost: (obj: PostsType) => void
+setUser: (id: number) => void
+setStatus: (userId: number) => void
+updateStatus: (status: string) => void
+updateUserInfo: (info: UserContactValues) => void
+}
+
 const ProfileContainer = (props: PropsType) => {
+
+  console.log('Profile Container');
+  
 
     useEffect(() => {
       if(props.authId) {
@@ -29,30 +49,23 @@ const ProfileContainer = (props: PropsType) => {
         authId={props.authId}
         status={props.status}
         updateStatus={props.updateStatus}
+        updateUserInfo={props.updateUserInfo}
+        error={props.error}
         />
     )
 }
 
-export type MapStateType = {
-    posts: PostsType[]
-    user: UserType
-    authId: number | null
-    status: string
-  }
+
   
   const mapState = (state: AppState): MapStateType => ({
     posts: state.profile.posts,
     user: state.profile.user,
     authId: state.auth.id,
-    status: state.profile.status
+    status: state.profile.status,
+    error: state.profile.error
   })
 
- export type MapDispatchType = {
-    addPost: (obj: PostsType) => void
-    setUser: (id: number) => void
-    setStatus: (userId: number) => void
-    updateStatus: (status: string) => void
-  }
+ 
   
   const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, AnyAction>): MapDispatchType => {
     return {
@@ -61,7 +74,8 @@ export type MapStateType = {
         },
         setUser: (id: number): void => dispatch(setUser(id)),
         setStatus: (userId: number): void => dispatch(setUserStatus(userId)),
-        updateStatus: (status: string): void => dispatch(updateStatus(status))
+        updateStatus: (status: string): void => dispatch(updateStatus(status)),
+        updateUserInfo: (info: UserContactValues): void => dispatch(updateUserInfo(info))
     }
   };
   

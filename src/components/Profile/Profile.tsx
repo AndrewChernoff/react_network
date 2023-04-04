@@ -4,6 +4,7 @@ import { PostsType, UserType } from "../../redux/reducers/profileReducer";
 import PostItem from "../PostItem/PostItem";
 import s from "./Profile.module.scss";
 import ProfileInfo from "./ProfileInfo";
+import { UserContactValues } from "./ProfileFormInfo/ProfileFormInfo";
 
  type ProfileProps = {
   posts: PostsType[],
@@ -12,6 +13,8 @@ import ProfileInfo from "./ProfileInfo";
   profile: UserType
   status: string
   updateStatus: (status: string) => void
+  updateUserInfo: (info: UserContactValues) => void
+  error: string
 }
 
 const Profile = (props: ProfileProps) => {
@@ -19,7 +22,11 @@ const Profile = (props: ProfileProps) => {
   return (
     <div className={s.profile}>
       <div className={s.profile__container}>
-        <ProfileInfo authId={props.authId} profile={props.profile} status={props.status} updateStatus={props.updateStatus}/>
+        <ProfileInfo authId={props.authId} profile={props.profile} status={props.status}
+        updateStatus={props.updateStatus}
+        updateUserInfo={props.updateUserInfo}
+        error={props.error}
+        />
 
         <div className={s.profile__post}>
           <AddPostItemFrom callback={props.onAddPostClick}/>

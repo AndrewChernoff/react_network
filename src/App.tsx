@@ -14,7 +14,6 @@ import Login from "./components/Login/Login";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { AppState, useStoreDispatch } from "./redux/reducers";
-import { Loader } from "./common/Loader";
 import { initializeThunk } from "./redux/reducers/appReducer";
 
 function App() {

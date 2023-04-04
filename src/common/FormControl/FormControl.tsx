@@ -2,11 +2,11 @@ import { Field } from "formik"
 
 type FormControlProps = {
   id?: string
-  varlidationCallback: (value: string) => void
+  varlidationCallback?: (value: string) => void
   componentType: string
   placeholder: string
   name: string
-  className: string
+  className?: string
   type: string
 }
 

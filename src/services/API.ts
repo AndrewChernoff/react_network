@@ -65,6 +65,12 @@ const API = {
     )
     return await data
   },
+  updateInfo: async(info: any) => {
+    const {data} = await instance.put(
+      `profile`, info
+    )
+    return await data
+  },
 };
 
 export default API

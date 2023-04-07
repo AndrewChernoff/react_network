@@ -17,7 +17,7 @@ export type MapStateType = {
   user: UserType
   authId: number | null
   status: string
-  error: string
+  error: string | null
 }
 
 export type MapDispatchType = {
@@ -26,7 +26,7 @@ setUser: (id: number) => void
 setStatus: (userId: number) => void
 updateStatus: (status: string) => void
 updateUserInfo: (info: UserContactValues) => void
-setError: (message: string) => void
+setError: (message: string | null) => void
 }
 
 const ProfileContainer = (props: PropsType) => {

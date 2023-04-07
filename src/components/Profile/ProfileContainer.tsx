@@ -1,13 +1,14 @@
-import { ChangeEvent, ComponentType, useEffect, useState } from "react";
-import { connect, useSelector } from "react-redux";
-import { AnyAction, compose, Dispatch } from "redux";
-import { ThunkDispatch } from "redux-thunk";
+import { ComponentType, useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { AnyAction, compose } from "redux";
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { withAuthRedirect } from "../../HOC/WithAuthRedirect";
 import { AppState } from "../../redux/reducers";
-import { addPost, PostsType, setUser, setUserStatus, updateStatus, updateUserInfo, UserType } from "../../redux/reducers/profileReducer";
+import { addPost, PostsType, setErrorAC, setUser, setUserStatus, updateStatus, updateUserInfo, UserType } from "../../redux/reducers/profileReducer";
 import Profile from "./Profile";
 import { UserContactValues } from "./ProfileFormInfo/ProfileFormInfo";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { StateType } from "../../redux/reducers/appReducer";
 
 type PropsType = MapStateType & MapDispatchType
 
@@ -25,6 +26,7 @@ setUser: (id: number) => void
 setStatus: (userId: number) => void
 updateStatus: (status: string) => void
 updateUserInfo: (info: UserContactValues) => void
+setError: (message: string) => void
 }
 
 const ProfileContainer = (props: PropsType) => {
@@ -56,6 +58,7 @@ const ProfileContainer = (props: PropsType) => {
         status={props.status}
         updateStatus={props.updateStatus}
         updateUserInfo={props.updateUserInfo}
+        setError={props.setError}
         error={props.error}
         />
     )
@@ -71,15 +74,16 @@ const ProfileContainer = (props: PropsType) => {
 
  
   
-  const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, AnyAction>): MapDispatchType => {
+  const mapDispatchToProps = (dispatch: /* ThunkAction<void, StateType, unknown, AnyAction> */ ThunkDispatch<unknown, StateType, AnyAction>): MapDispatchType => {
     return {
-        addPost: (obj): void => {
+        addPost: (obj) => {
             dispatch(addPost(obj))
         },
-        setUser: (id: number): void => dispatch(setUser(id)),
-        setStatus: (userId: number): void => dispatch(setUserStatus(userId)),
-        updateStatus: (status: string): void => dispatch(updateStatus(status)),
-        updateUserInfo: (info: UserContactValues): void => dispatch(updateUserInfo(info))
+        setUser: (id) => dispatch(setUser(id)),
+        setStatus: (userId) => dispatch(setUserStatus(userId)),
+        updateStatus: (status) => dispatch(updateStatus(status)),
+        updateUserInfo: (info) => dispatch(updateUserInfo(info)),
+        setError: (message) => dispatch(setErrorAC(message))
     }
   };
   

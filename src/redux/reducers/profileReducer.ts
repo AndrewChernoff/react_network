@@ -12,7 +12,7 @@ type AddPostType = ReturnType<typeof addPost>
 type SetUserType = ReturnType<typeof setUserAC>
 type SetUserStatusType = ReturnType<typeof setUserStatusAC>
 type UpdateInfoType = ReturnType<typeof updateInfoAC>
-type setErroroACType = ReturnType<typeof setErroroAC>
+type setErroroACType = ReturnType<typeof setErrorAC>
 
 type ActionType = AddPostType | SetUserType | SetUserStatusType | UpdateInfoType | setErroroACType
 
@@ -42,7 +42,7 @@ export type ProfileState = {
     posts: PostsType[]
     user: any 
     status: string
-    error: string
+    error: string | null
 }
 
 const initialState: ProfileState = {
@@ -53,7 +53,7 @@ const initialState: ProfileState = {
   ],
   user: null,
   status: '',
-  error: ''
+  error: null
 };
 
 const profileReducer = (state = initialState, action: ActionType): ProfileState  => {
@@ -77,7 +77,7 @@ export const addPost = (payload: PostsType) => ({type: ADD_POST, payload}) as co
 export const setUserAC = (user: PostsType) => ({type: SET_USER, user}) as const
 export const setUserStatusAC = (status: string) => ({type: SET_STATUS, status}) as const
 const updateInfoAC = (info: UserContactValues) => ({type: UPDATE_INFO, info}) as const
-const setErroroAC = (error: string) => ({type: SET_ERROR, error}) as const
+export const setErrorAC = (error: string | null) => ({type: SET_ERROR, error}) as const
 
 export const setUser = (userId: number) => (dispatch: Dispatch) => {
   API.getProfile(userId)
@@ -106,7 +106,7 @@ export const updateUserInfo = (info: UserContactValues) => (dispatch: Dispatch) 
       if(data.resultCode === 0) {
         dispatch(updateInfoAC(info))
       } else if (data.resultCode === 1 && data.messages.length > 0) {
-        dispatch(setErroroAC(data.messages[0]))
+        dispatch(setErrorAC(data.messages[0]))
       }
     })
 }

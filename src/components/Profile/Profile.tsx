@@ -14,7 +14,8 @@ import { UserContactValues } from "./ProfileFormInfo/ProfileFormInfo";
   status: string
   updateStatus: (status: string) => void
   updateUserInfo: (info: UserContactValues) => void
-  error: string
+  error: string | null
+  setError: (message: string | null) => void
 }
 
 const Profile = (props: ProfileProps) => {
@@ -25,6 +26,7 @@ const Profile = (props: ProfileProps) => {
         <ProfileInfo authId={props.authId} profile={props.profile} status={props.status}
         updateStatus={props.updateStatus}
         updateUserInfo={props.updateUserInfo}
+        setError={props.setError}
         error={props.error}
         />
 
@@ -40,7 +42,7 @@ const Profile = (props: ProfileProps) => {
     </div>
   );
 };
-
+//////
 interface Values {
   postValue: string;
 }

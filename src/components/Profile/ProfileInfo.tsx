@@ -22,7 +22,7 @@ const ProfileInfo = (props: ProfileInfoType) => {
     setTitle(props.status)
   }, [props.status])
 
-  props.error && alert(props.error) 
+  //props.error && alert(props.error) ////the problem is that i need to make changing only on autherized profile in show an error only in editMode
 
   const onDoubleClickHandler = () => setEditMode(!editMode)
 
@@ -70,6 +70,8 @@ const ProfileInfo = (props: ProfileInfoType) => {
     </div>
     : <ProfileFormInfo setEditInfo={setEditInfoMode} profile={props.profile} updateUserInfo={props.updateUserInfo}/>
       }
+
+      { props.error && <div>{props.error}</div>}
       </div>
     </div>
   );

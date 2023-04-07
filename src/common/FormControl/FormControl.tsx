@@ -2,23 +2,25 @@ import { Field } from "formik"
 
 type FormControlProps = {
   id?: string
-  varlidationCallback?: (value: string) => void
+  validationCallback?: (value: string) => void
   componentType: string
-  placeholder: string
+  placeholder?: string
   name: string
   className?: string
   type: string
+  labelName?: string
 }
 
-const FormControl = ({id, varlidationCallback, componentType, placeholder, name, className, type}:FormControlProps) => {
+const FormControl = ({id, validationCallback, componentType, placeholder, name, className, type, labelName}:FormControlProps) => {
     return  <>
+    {labelName &&<label htmlFor={id}>{labelName}</label>}
     <Field
     id={id}
     name={name}
     placeholder={placeholder}
     type={type}
     component={componentType}
-    validate={varlidationCallback}
+    validate={validationCallback}
     className={className}
   />
   </>

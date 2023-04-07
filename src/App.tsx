@@ -34,7 +34,7 @@ function App() {
           {isInit &&  <Routes>
             <Route path="" element={ <Navigate to="profile" />} />
             <Route path="profile" element={<ProfileContainer />} />
-            <Route path="profile/:id" element={<UserProfile />} />
+            <Route path="profile/:id" element={</* UserProfile */ProfileContainer />} />
             <Route path="users" element={<UsersContainer />} />
             <Route path="messages" element={<MessagesContainer />} />
             <Route path="messages/:id" element={<DialogItem />} />

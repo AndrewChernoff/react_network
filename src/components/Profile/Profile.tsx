@@ -74,7 +74,7 @@ const AddPostItemFrom = ({callback}: AddPostItemFromType) => {
 
 {({ errors }) => (
   <Form>
-    <FormControl varlidationCallback={validateFormItem} 
+    <FormControl validationCallback={validateFormItem} 
     componentType={'textarea'} placeholder={'Type your post'} name={'postValue'} type={'text'} className={errors.postValue? s.errorTextarea : ''}/>
     {errors.postValue && <div className={s.errorBlock}>{errors.postValue}</div>}
 

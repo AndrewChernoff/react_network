@@ -7,6 +7,7 @@ import { AppState } from "../../redux/reducers";
 import { addPost, PostsType, setUser, setUserStatus, updateStatus, updateUserInfo, UserType } from "../../redux/reducers/profileReducer";
 import Profile from "./Profile";
 import { UserContactValues } from "./ProfileFormInfo/ProfileFormInfo";
+import { useLocation, useParams } from "react-router-dom";
 
 type PropsType = MapStateType & MapDispatchType
 
@@ -29,14 +30,19 @@ updateUserInfo: (info: UserContactValues) => void
 const ProfileContainer = (props: PropsType) => {
 
   console.log('Profile Container');
+  const {id} = useParams();
   
-
     useEffect(() => {
-      if(props.authId) {
-        props.setUser(props.authId)
-        props.setStatus(props.authId)
+      if(id) {
+          props.setUser(+id)
+          props.setStatus(+id)
+      } else {
+        if(props.authId) {
+          props.setUser(props.authId)
+          props.setStatus(props.authId)
+        }
       }
-    }, [])
+    }, [id])
 
     const onAddPostClick = (value: string) => {
       props.addPost({id: (props.posts.length + 1), message: value, likes: 0});
@@ -55,8 +61,6 @@ const ProfileContainer = (props: PropsType) => {
     )
 }
 
-
-  
   const mapState = (state: AppState): MapStateType => ({
     posts: state.profile.posts,
     user: state.profile.user,

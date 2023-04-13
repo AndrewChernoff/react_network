@@ -3,9 +3,9 @@ import { AnyAction, Dispatch } from "redux"
 import { ThunkAction } from "redux-thunk"
 import API from "../../services/API"
 
-const SET_USER = "SET_USER"
-const LOGOUT = "LOGOUT"
-const LOGIN_ERROR = "LOGIN_ERROR"
+const SET_USER = "auth/SET_USER"
+const LOGOUT = "auth/LOGOUT"
+const LOGIN_ERROR = "auth/LOGIN_ERROR"
 
 type SetUserType = ReturnType<typeof setUserAuthorizedUserAC>
 type LogoutType = ReturnType<typeof logoutAC>
@@ -65,35 +65,33 @@ export const setUserAuthorizedUserAC = ({id, email, login}: AuthDataType) => ({t
 export const logoutAC = () => ({type: LOGOUT}) as const
 export const logInErrorAC = (payload: boolean) => ({type: LOGIN_ERROR, payload}) as const
 
-export const setUserAuthorizedUserThunk = () => (dispatch: Dispatch) => {
-  return API.authMe()
-    .then(data => {
-        if (data.resultCode === 0) {    
-            dispatch(setUserAuthorizedUserAC(data.data))}
+export const setUserAuthorizedUserThunk = () => async(dispatch: Dispatch) => {
+  const res = await API.authMe()
+    
+        if (res.resultCode === 0) {    
+            dispatch(setUserAuthorizedUserAC(res.data))
+            }
         }
-    )
+    
+
+
+export const logOut = () => async(dispatch: Dispatch) => {
+    const res = await API.logout()
+        if (res.resultCode === 0) {    
+            dispatch(logoutAC())
+        }
 }
 
-export const logOut = () => (dispatch: Dispatch) => {
-    API.logout()
-    .then(data => {
-        if (data.resultCode === 0) {    
-            dispatch(logoutAC())}
-        }
-    )
-}
-
-export const logIn = (obj: any): ThunkAction<void, AppState, unknown, AnyAction> => (dispatch) => {
-    API.login(obj)
-    .then(data => {
-        if (data.resultCode === 0) {    
+export const logIn = (obj: any): ThunkAction<void, AppState, unknown, AnyAction> => async(dispatch) => {
+    const res = await API.login(obj)
+        if (res.resultCode === 0) {    
             dispatch(logInErrorAC(false))
             dispatch(setUserAuthorizedUserThunk())
-        } else if (data.resultCode === 1) {
+        } else if (res.resultCode === 1) {
             dispatch(logInErrorAC(true))
         }
-    }
-    )
+    
+    
 }
 
 

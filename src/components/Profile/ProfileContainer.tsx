@@ -29,37 +29,37 @@ updateUserInfo: (info: UserContactValues) => void
 setError: (message: string | null) => void
 }
 
-const ProfileContainer = (props: PropsType) => {
-
-  console.log('Profile Container');
-  const {id} = useParams();
+const ProfileContainer = ({setUser, setStatus, authId, addPost, posts, user, status,
+  updateStatus, updateUserInfo, setError, error}: PropsType) => {
+  
+    const {id} = useParams();
   
     useEffect(() => {
       if(id) {
-          props.setUser(+id)
-          props.setStatus(+id)
+          setUser(+id)
+          setStatus(+id)
       } else {
-        if(props.authId) {
-          props.setUser(props.authId)
-          props.setStatus(props.authId)
+        if(authId) {
+          setUser(authId)
+          setStatus(authId)
         }
       }
     }, [id])
 
     const onAddPostClick = (value: string) => {
-      props.addPost({id: (props.posts.length + 1), message: value, likes: 0});
+      addPost({id: (posts.length + 1), message: value, likes: 0});
     }
 
     return (
         <Profile onAddPostClick={onAddPostClick} 
-        posts={props.posts}
-        profile={props.user}
-        authId={props.authId}
-        status={props.status}
-        updateStatus={props.updateStatus}
-        updateUserInfo={props.updateUserInfo}
-        setError={props.setError}
-        error={props.error}
+        posts={posts}
+        profile={user}
+        authId={authId}
+        status={status}
+        updateStatus={updateStatus}
+        updateUserInfo={updateUserInfo}
+        setError={setError}
+        error={error}
         />
     )
 }
@@ -74,7 +74,7 @@ const ProfileContainer = (props: PropsType) => {
 
  
   
-  const mapDispatchToProps = (dispatch: /* ThunkAction<void, StateType, unknown, AnyAction> */ ThunkDispatch<unknown, StateType, AnyAction>): MapDispatchType => {
+  const mapDispatchToProps = (dispatch: ThunkDispatch<unknown, StateType, AnyAction>): MapDispatchType => {
     return {
         addPost: (obj) => {
             dispatch(addPost(obj))

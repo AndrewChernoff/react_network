@@ -10,25 +10,24 @@ const instance = axios.create({
 
 const API = {
   getUsers: async (pageSize: number, currentPage: number) => {
-    const { data } = await instance.get(
+    return instance.get(
       `users?count=${pageSize}&page=${currentPage}`
-    );
-    return await data;
+    ).then(res => res.data)
   },
 
   follow: async(userId: number) => {
-    const res = await instance.post(`follow/${userId}`)
-    return res
+    return instance.post(`follow/${userId}`)
+     .then(res => res.data)
   },
 
   unfollow: async(userId: number) => {
-    const res = await instance.delete(`follow/${userId}`)
-    return res
+    return instance.delete(`follow/${userId}`)
+    .then(res => res.data)
   },
 
-  authMe: async() => {
-    const {data} = await instance.get(`auth/me`)
-    return await data
+  authMe: () => {
+    return instance.get(`auth/me`)
+      .then(res => res.data)
   },
   
   getProfile: async(userId: number) => {
@@ -38,38 +37,38 @@ const API = {
     return await data
   },
 
-  getStatus: async(userId: number) => {
-    const {data} = await instance.get(
+  getStatus: (userId: number) => {
+    return instance.get(
       `profile/status/${userId}`
     )
-    return await data
+    .then(res => res.data)
   },
 
-  updateStatus: async(status: string) => {
-    const {data} = await instance.put(
+  updateStatus: (status: string) => {
+    return instance.put(
       `profile/status`, {status}
     )
-    return await data
+    .then(res => res.data)
+    
   },
 
-  login: async(obj: any) => {
-    const {data} = await instance.post(
+  login: (obj: any) => {
+    return instance.post(
       `auth/login`, obj
     )
-    return await data
+    .then(res => res.data)
+    
   },
 
-  logout: async() => {
-    const {data} = await instance.delete(
-      `auth/login`
-    )
-    return await data
+  logout: () => {
+    return  instance.delete(`auth/login`)
+      .then(res => res.data)
   },
-  updateInfo: async(info: any) => {
-    const {data} = await instance.put(
+  updateInfo: (info: any) => {
+    return instance.put(
       `profile`, info
     )
-    return await data
+    .then(res => res.data)
   },
 };
 

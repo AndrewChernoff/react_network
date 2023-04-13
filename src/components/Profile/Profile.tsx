@@ -18,23 +18,23 @@ import { UserContactValues } from "./ProfileFormInfo/ProfileFormInfo";
   setError: (message: string | null) => void
 }
 
-const Profile = (props: ProfileProps) => {
+const Profile = ({posts, onAddPostClick, authId, profile, status, updateStatus, updateUserInfo, error, setError}: ProfileProps) => {
 
   return (
     <div className={s.profile}>
       <div className={s.profile__container}>
-        <ProfileInfo authId={props.authId} profile={props.profile} status={props.status}
-        updateStatus={props.updateStatus}
-        updateUserInfo={props.updateUserInfo}
-        setError={props.setError}
-        error={props.error}
+        <ProfileInfo authId={authId} profile={profile} status={status}
+        updateStatus={updateStatus}
+        updateUserInfo={updateUserInfo}
+        setError={setError}
+        error={error}
         />
 
         <div className={s.profile__post}>
-          <AddPostItemFrom callback={props.onAddPostClick}/>
+          <AddPostItemFrom callback={onAddPostClick}/>
         </div>
         {
-            props.posts.map((el) => {
+            posts.map((el) => {
                 return <PostItem key={el.id} message={el.message} likes={el.likes}/>
             })
         }

@@ -3,6 +3,7 @@ import userAva from "../../imgs/user.png";
 import s from "./Users.module.scss";
 import { NavLink } from "react-router-dom";
 import React from "react";
+import User from "./User";
 
 type UsersProps = {
   users: UsersType[]
@@ -25,7 +26,8 @@ class Users extends React.Component<UsersProps> {
       <div>
         {this.props.users.map((u) => {
           return (
-            <div key={u.id}>
+            <User key={u.id} photos={u.photos} name={u.name} followingInProgress={this.props.followingInProgress}
+            onUnFollowClick={this.props.unFollowUser} onFollowClick={this.props.followUser} followed={u.followed} id={u.id} status={u.status}/>/* <div key={u.id}>
               <NavLink key={u.id} className={s.user} to={`/profile/${u.id}`}>
                 <img
                   className={s.user__img}
@@ -46,7 +48,7 @@ class Users extends React.Component<UsersProps> {
               </div>
               <div>{u.name}</div>
               <div>{u.status}</div>
-            </div>
+            </div> */
           );
         })}
       </div>

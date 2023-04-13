@@ -1,5 +1,4 @@
 import s from "./Users.module.scss";
-import axios from "axios";
 import { UsersType } from "../../redux/reducers/usersReducer";
 import React from "react";
 import Users from "./Users";

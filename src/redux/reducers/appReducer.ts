@@ -3,7 +3,7 @@ import { AnyAction, Dispatch } from "redux"
 import { ThunkAction } from "redux-thunk"
 import { setUserAuthorizedUserThunk } from './authReducer';
 
-const SET_APP_INIT = "SET_APP_INIT"
+const SET_APP_INIT = "app/SET_APP_INIT"
 
 type SetAppInitType = ReturnType<typeof setAppInitAC>
 

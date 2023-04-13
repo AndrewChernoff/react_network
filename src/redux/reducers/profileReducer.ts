@@ -2,11 +2,11 @@ import { Dispatch } from "redux"
 import API from "../../services/API"
 import { UserContactValues } from "../../components/Profile/ProfileFormInfo/ProfileFormInfo"
 
-const ADD_POST = "ADD_POST"
-const SET_USER = "SET_USER"
-const SET_STATUS = "SET_STATUS"
-const UPDATE_INFO = "UPDATE_INFO"
-const SET_ERROR = "SET_ERROR"
+const ADD_POST = "profile/ADD_POST"
+const SET_USER = "profile/SET_USER"
+const SET_STATUS = "profile/SET_STATUS"
+const UPDATE_INFO = "profile/UPDATE_INFO"
+const SET_ERROR = "profile/SET_ERROR"
 
 type AddPostType = ReturnType<typeof addPost>
 type SetUserType = ReturnType<typeof setUserAC>
@@ -85,30 +85,25 @@ export const setUser = (userId: number) => (dispatch: Dispatch) => {
         )
 }
 
-export const setUserStatus = (userId: number) => (dispatch: Dispatch) => {///getting data from server
-  API.getStatus(userId)
-        .then(data => {
-          dispatch(setUserStatusAC(data))
-        }
-        )
+export const setUserStatus = (userId: number) => async(dispatch: Dispatch) => {///getting data from server
+  const res = await API.getStatus(userId)  
+          dispatch(setUserStatusAC(res))
 }
 
-export const updateStatus = (status: string) => (dispatch: Dispatch) => {
-  API.updateStatus(status)
-    .then(data => {
+export const updateStatus = (status: string) => async(dispatch: Dispatch) => {
+  const res = await API.updateStatus(status)
+  if(res.resultCode === 0) {
       dispatch(setUserStatusAC(status))
-    })
+    }
   }
 
-export const updateUserInfo = (info: UserContactValues) => (dispatch: Dispatch) => {
-  API.updateInfo(info)
-    .then(data => {
-      if(data.resultCode === 0) {
+export const updateUserInfo = (info: UserContactValues) => async(dispatch: Dispatch) => {
+  const res = await API.updateInfo(info)
+      if(res.resultCode === 0) {
         dispatch(updateInfoAC(info))
-      } else if (data.resultCode === 1 && data.messages.length > 0) {
-        dispatch(setErrorAC(data.messages[0]))
+      } else if (res.resultCode === 1 && res.messages.length > 0) {
+        dispatch(setErrorAC(res.messages[0]))
       }
-    })
 }
 
 export default profileReducer;

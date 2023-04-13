@@ -8,13 +8,13 @@ import { withAuthRedirect } from "../../HOC/WithAuthRedirect";
 
 type MessagesPropsType = MapStateType & MapDispatchType
 
-const MessagesContainer = (props: MessagesPropsType) => {
+const MessagesContainer = ({sendMessage, messages, dialogs}: MessagesPropsType) => {
   
   const onSendClick = (message: string) => {
-    props.sendMessage({id: 5, message: message})
+    sendMessage({id: 5, message: message})
   }
   
-  return <Messages onSendClick={onSendClick} messages={props.messages} dialogs={props.dialogs} /* onChangeHandler={onChangeHandler} *//>
+  return <Messages onSendClick={onSendClick} messages={messages} dialogs={dialogs} /* onChangeHandler={onChangeHandler} *//>
 }
 
 type MapStateType = {

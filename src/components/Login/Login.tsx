@@ -23,8 +23,6 @@ interface Values {
     useEffect(() => {
       if(isAuth) navigate("/profile");
     },[isAuth])
-    
-
 
     function validateEmail(value: string) {      
       let error;
@@ -72,7 +70,7 @@ interface Values {
                 id="email"
                 placeholder="john@acme.com"
                 type="email"
-                varlidationCallback={validateEmail}
+                validationCallback={validateEmail}
                 componentType={'input'}
                 className={errors.email && touched.email ? s.errorInput : s.input}/>
               {errors.email && touched.email && <div className={s.errorBlock}>{errors.email}</div>}
@@ -84,7 +82,7 @@ interface Values {
                 id="password"
                 placeholder="Password"
                 type="Password"
-                varlidationCallback={validatePassword}
+                validationCallback={validatePassword}
                 componentType={'input'}
                 className={errors.password && touched.password ? s.errorPasswordInput : s.input}/>
               {errors.password && touched.password && <div className={s.errorBlock}>{errors.password}</div>}

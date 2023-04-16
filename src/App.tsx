@@ -20,7 +20,6 @@ function App() {
 
   const isInit = useSelector<AppState, boolean>(state => state.initialize.init)
   const dispatch = useStoreDispatch()
- 
 
   useEffect(() => {
     dispatch(initializeThunk())

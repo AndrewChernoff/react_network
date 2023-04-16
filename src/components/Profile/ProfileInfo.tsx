@@ -14,29 +14,27 @@ type ProfileInfoType = {
   setError: (message: string | null) => void
 }
 
-const ProfileInfo = (props: ProfileInfoType) => {
+const ProfileInfo = ({authId, profile, status, updateStatus, updateUserInfo, error, setError}: ProfileInfoType) => {
   const [editMode, setEditMode] = useState<boolean>(false)
   const [editInfo, setEditInfo] = useState<boolean>(false)
-  const [title, setTitle] = useState<string>(props.status)
+  const [title, setTitle] = useState<string>(status)
 
    useEffect(() => {
-    setTitle(props.status)
-  }, [props.status])
+    setTitle(status)
+  }, [status])
 
   useEffect(() => {
 
     return () => {
       console.log('unmount');
-      props.setError(null)
+      setError(null)
     }
   }, [])
-
-  //props.error && alert(props.error) ////the problem is that i need to make changing only on autherized profile in show an error only in editMode
 
   const onDoubleClickHandler = () => setEditMode(!editMode)
 
   const onBlurHandler = () => {
-    props.updateStatus(title)
+    updateStatus(title)
     setEditMode(!editMode)
   }
 
@@ -46,7 +44,7 @@ const ProfileInfo = (props: ProfileInfoType) => {
   
   return (
     <div>
-       <img src={`${props.profile ? props.profile.photos.large : userAva}`} alt='ava'/>
+       <img src={`${profile ? profile.photos.large : userAva}`} alt='ava'/>
        
       <div> Status: {!editMode ? 
        <span onDoubleClick={onDoubleClickHandler}>{title}</span>
@@ -57,36 +55,36 @@ const ProfileInfo = (props: ProfileInfoType) => {
       <h2>Main info</h2>
       <ul className={s.infoContent}>
       <li>
-      Full name: {props.profile?.fullName}
+      Full name: {profile?.fullName}
       </li>
       <li>
-      About me: {props.profile?.aboutMe}
+      About me: {profile?.aboutMe}
       </li>
       <li>
-      Looking for a job: {props.profile?.lookingForAJob ? 'yes' : ' no'}
+      Looking for a job: {profile?.lookingForAJob ? 'yes' : ' no'}
       </li>
       <li>
-      Looking for a job description: {props.profile?.lookingForAJobDescription}
+      Looking for a job description: {profile?.lookingForAJobDescription}
       </li>
     </ul>
     <div className={s.contacts}>
       <h3> Contacts:</h3>
     <ul>
-        {props.profile && Object.keys(props.profile.contacts).map(key => {
-          return <li>{key}: {props.profile.contacts[key] || '--'}</li>
+        {profile && Object.keys(profile.contacts).map(key => {
+          return <li>{key}: {profile.contacts[key] || '--'}</li>
         })}
       </ul>
     </div>
-    <button onClick={() => setEditInfo(!editInfo)}>Edit info</button>
+    {authId === profile?.userId && <button onClick={() => setEditInfo(!editInfo)}>Edit info</button>}
 
     </div>
     : <ProfileFormInfo 
       setEditInfo={setEditInfoMode}
-       profile={props.profile} 
-       updateUserInfo={props.updateUserInfo}/>
+       profile={profile} 
+       updateUserInfo={updateUserInfo}/>
       }
       </div>
-      {props.error && <div className={s.errorMessage}>{props.error}</div>}
+      {error && <div className={s.errorMessage}>{error}</div>}
     </div>
   );
 };

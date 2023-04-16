@@ -24,16 +24,16 @@ export type PostsType = {
 }
 
 export type UserType = {
-  aboutMe: string | null
+  aboutMe: string
   contacts: {
-    [key: string]: string | null
+    [key: string]: string
   }
-  fullName: string | null
+  fullName: string
   lookingForAJob: boolean
   lookingForAJobDescription: boolean
   photos: {
-    small: string | null
-    large: string | null
+    small: string
+    large: string
   }
   userId: number
 }

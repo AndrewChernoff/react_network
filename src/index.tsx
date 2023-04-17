@@ -11,11 +11,11 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-    <HashRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter>
       <Provider store={store}>
         <App />
       </Provider>
-    </HashRouter>
+    </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function

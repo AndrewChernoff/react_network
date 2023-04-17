@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkmy_app=self.webpackChunkmy_app||[]).push([[739],{7929:function(n,u,t){t.d(u,{D:function(){return s}});var r=t(8683),i=t(9101),c=t(7689),e=t(184);function s(n){return(0,i.$j)(f)((function(u){return u.isAuth?(0,e.jsx)(n,(0,r.Z)({},u)):(0,e.jsx)(c.Fg,{to:"/login"})}))}var f=function(n){return{isAuth:n.auth.isAuth}}},3739:function(n,u,t){t.r(u);var r=t(7781),i=t(7929),c=t(184);u.default=(0,r.qC)(i.D)((function(){return(0,c.jsx)("div",{children:(0,c.jsx)("h2",{children:"Music"})})}))}}]);
+//# sourceMappingURL=739.dba6cb6a.chunk.js.map

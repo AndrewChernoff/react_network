@@ -31,7 +31,12 @@ const ProfileInfo = ({authId, profile, status, updateStatus, updateUserInfo, err
     }
   }, [])
 
-  const onDoubleClickHandler = () => setEditMode(!editMode)
+  const onDoubleClickHandler = () => {
+    if(!(authId === profile?.userId)) {
+      return
+    } 
+    setEditMode(!editMode)
+  }
 
   const onBlurHandler = () => {
     updateStatus(title)

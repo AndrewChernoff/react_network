@@ -1,8 +1,10 @@
 import s from "./Users.module.scss";
 import { UsersType } from "../../redux/reducers/usersReducer";
-import React from "react";
+import { useEffect, useState } from "react";
 import Users from "./Users";
 import { Loader } from "../../common/Loader";
+import ReactPaginate from 'react-paginate';
+
 
 type UsersPropsType = {
   users: UsersType[]
@@ -17,50 +19,100 @@ type UsersPropsType = {
   getUsersOnPageClick: (pageSize: number, currentPage: number) => void
 };
 
-class UsersAPI extends React.Component<UsersPropsType> {
-  componentDidMount(): void {
-    this.props.getUsers(this.props.pageSize, this.props.currentPage)
-  }
+function Items({ currentItems }: any) {
+  return (
+    <>
+      {currentItems &&
+        currentItems.map((item: number) => (
+          <div>
+            <h3>{item}</h3>
+          </div>
+        ))}
+    </>
+  );
+}
 
-  render() {
+const UsersAPI = (props: UsersPropsType) => {
+////////////fix bug with clicking pages
+  useEffect(() => {
+    props.getUsers(props.pageSize, props.currentPage)
+  }, [])
+
+  const [itemOffset, setItemOffset] = useState(0);
+
+
     let pages: number[] = [];
 
     for (
       let i = 1;
-      i <= Math.ceil(this.props.totalCount / this.props.pageSize);
+      i <= Math.ceil(props.totalCount / props.pageSize);
       i++
     ) {
       pages.push(i);
     }
 
+    
+  // Simulate fetching items from another resources.
+  // (This could be items from props; or items loaded in a local state
+  // from an API endpoint with useEffect and useState)
+  const endOffset = itemOffset + props.pageSize;
+  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+  const currentItems = pages.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(pages.length / props.pageSize);
+
+  // Invoke when user click to request another page.
+  const handlePageClick = (event: any) => {
+    const newOffset = (event.selected * props.pageSize) % pages.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
+    props.getUsersOnPageClick(props.pageSize, event.selected)
+  };
+
     return (
       <div className={s.users}>
         <div>
-          {pages.map((p) => (
+          {/* {pages.map((p) => (
             <span
               key={p}
-              className={p === this.props.currentPage ? s.active__page : ""}
+              className={p === props.currentPage ? s.active__page : ""}
               onClick={() => {
-                this.props.getUsersOnPageClick(this.props.pageSize, p)
+                props.getUsersOnPageClick(props.pageSize, p)
               }}
             >
               {p}
             </span>
-          ))}
+          ))} */}
+         {/*  <Items currentItems={currentItems} /> */}
+      <ReactPaginate
+        breakLabel="..."
+        nextLabel="next"
+        onPageChange={handlePageClick}
+        pageRangeDisplayed={5}
+        pageCount={pageCount}
+        previousLabel="prev"
+        activeClassName={s.active__page}
+        renderOnZeroPageCount={null}
+        containerClassName={s.pages_container}
+        pageClassName={s.page}
+        previousClassName={s.prev}
+        nextClassName={s.next}
+      />
         </div>
-        {this.props.isFetching ? (
+        {props.isFetching ? (
           <Loader />
         ) : (
           <Users
-            users={this.props.users}
-            followUser={this.props.followUser}
-            unFollowUser={this.props.unFollowUser}
-            followingInProgress={this.props.followingInProgress}
+            users={props.users}
+            followUser={props.followUser}
+            unFollowUser={props.unFollowUser}
+            followingInProgress={props.followingInProgress}
           />
         )}
       </div>
     );
-  }
+  
 }
 
 export default UsersAPI;

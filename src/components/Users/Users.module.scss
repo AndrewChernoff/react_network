@@ -1,5 +1,18 @@
 .users {
     margin: 20px 0 0 20px;
+    .pages_container {
+        display: flex;
+    }
+    .page {
+        margin: 0 5px 0 5px;
+    }
+    .prev, .next {
+        height: 20px;
+        width: 50px;
+        text-align: center;
+        border-radius: 10px;
+        background: rgb(59, 73, 223);
+    }
 .user {
     display: block;
     margin-top: 30px;

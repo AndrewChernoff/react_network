@@ -12,24 +12,22 @@ type ProfileInfoType = {
   updateUserInfo: (info: UserContactValues) => void
   error: string | null
   setError: (message: string | null) => void
+  uploadPhoto: (image: File) => void
 }
 
-const ProfileInfo = ({authId, profile, status, updateStatus, updateUserInfo, error, setError}: ProfileInfoType) => {
+const ProfileInfo = ({authId, profile, status, updateStatus, updateUserInfo, error, setError, uploadPhoto}: ProfileInfoType) => {
   const [editMode, setEditMode] = useState<boolean>(false)
   const [editInfo, setEditInfo] = useState<boolean>(false)
   const [title, setTitle] = useState<string>(status)
 
    useEffect(() => {
     setTitle(status)
+    return () => {
+      error && setError(null)
+    }
   }, [status])
 
-  useEffect(() => {
-
-    return () => {
-      console.log('unmount');
-      setError(null)
-    }
-  }, [])
+  const isOwner = (authId === profile?.userId)
 
   const onDoubleClickHandler = () => {
     if(!(authId === profile?.userId)) {
@@ -47,9 +45,17 @@ const ProfileInfo = ({authId, profile, status, updateStatus, updateUserInfo, err
 
   const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)
   
+  const uploadImg = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.length) {
+      uploadPhoto(e.target.files[0])
+    }
+  }
+
   return (
     <div>
        <img src={`${profile ? profile.photos.large : userAva}`} alt='ava'/>
+
+       <input type='file' onChange={uploadImg}/>
        
       <div> Status: {!editMode ? 
        <span onDoubleClick={onDoubleClickHandler}>{title}</span>
@@ -80,7 +86,7 @@ const ProfileInfo = ({authId, profile, status, updateStatus, updateUserInfo, err
         })}
       </ul>
     </div>
-    {authId === profile?.userId && <button onClick={() => setEditInfo(!editInfo)}>Edit info</button>}
+    {isOwner && <button onClick={() => setEditInfo(!editInfo)}>Edit info</button>}
 
     </div>
     : <ProfileFormInfo 

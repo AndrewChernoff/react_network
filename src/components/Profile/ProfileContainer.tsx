@@ -1,10 +1,10 @@
-import { ComponentType, useEffect, useState } from "react";
+import { ComponentType, useEffect } from "react";
 import { connect } from "react-redux";
 import { AnyAction, compose } from "redux";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { withAuthRedirect } from "../../HOC/WithAuthRedirect";
 import { AppState } from "../../redux/reducers";
-import { addPost, PostsType, setErrorAC, setUser, setUserStatus, updateStatus, updateUserInfo, UserType } from "../../redux/reducers/profileReducer";
+import { addPost, PostsType, setErrorAC, setUser, setUserStatus, updatePhoto, updateStatus, updateUserInfo, UserType } from "../../redux/reducers/profileReducer";
 import Profile from "./Profile";
 import { UserContactValues } from "./ProfileFormInfo/ProfileFormInfo";
 import { useParams } from "react-router-dom";
@@ -21,16 +21,17 @@ export type MapStateType = {
 }
 
 export type MapDispatchType = {
-addPost: (obj: PostsType) => void
-setUser: (id: number) => void
-setStatus: (userId: number) => void
-updateStatus: (status: string) => void
-updateUserInfo: (info: UserContactValues) => void
-setError: (message: string | null) => void
+  addPost: (obj: PostsType) => void
+  setUser: (id: number) => void
+  setStatus: (userId: number) => void
+  updateStatus: (status: string) => void
+  updateUserInfo: (info: UserContactValues) => void
+  setError: (message: string | null) => void
+  uploadPhoto: (image: File) => void
 }
 
 const ProfileContainer = ({setUser, setStatus, authId, addPost, posts, user, status,
-  updateStatus, updateUserInfo, setError, error}: PropsType) => {
+  updateStatus, updateUserInfo, setError, error, uploadPhoto}: PropsType) => {
   
     const {id} = useParams();
   
@@ -60,6 +61,7 @@ const ProfileContainer = ({setUser, setStatus, authId, addPost, posts, user, sta
         updateUserInfo={updateUserInfo}
         setError={setError}
         error={error}
+        uploadPhoto={uploadPhoto}
         />
     )
 }
@@ -75,6 +77,7 @@ const ProfileContainer = ({setUser, setStatus, authId, addPost, posts, user, sta
  
   
   const mapDispatchToProps = (dispatch: ThunkDispatch<unknown, StateType, AnyAction>): MapDispatchType => {
+    
     return {
         addPost: (obj) => {
             dispatch(addPost(obj))
@@ -83,7 +86,8 @@ const ProfileContainer = ({setUser, setStatus, authId, addPost, posts, user, sta
         setStatus: (userId) => dispatch(setUserStatus(userId)),
         updateStatus: (status) => dispatch(updateStatus(status)),
         updateUserInfo: (info) => dispatch(updateUserInfo(info)),
-        setError: (message) => dispatch(setErrorAC(message))
+        setError: (message) => dispatch(setErrorAC(message)),
+        uploadPhoto: (photo) => dispatch(updatePhoto(photo))
     }
   };
   

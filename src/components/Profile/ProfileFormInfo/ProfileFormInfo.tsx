@@ -2,7 +2,6 @@ import { Field, Form, Formik } from "formik";
 import { UserType } from "../../../redux/reducers/profileReducer";
 import s from './ProfileFormInfo.module.scss'
 import FormControl from "../../../common/FormControl/FormControl";
-import { useEffect } from "react";
 
 export type UserContactValues = {
   fullName: string | null

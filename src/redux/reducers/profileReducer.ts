@@ -1,21 +1,23 @@
 import { Dispatch } from "redux"
 import API from "../../services/API"
 import { UserContactValues } from "../../components/Profile/ProfileFormInfo/ProfileFormInfo"
+import { UsersType } from "./usersReducer"
 
 const ADD_POST = "profile/ADD_POST"
 const SET_USER = "profile/SET_USER"
 const SET_STATUS = "profile/SET_STATUS"
 const UPDATE_INFO = "profile/UPDATE_INFO"
 const SET_ERROR = "profile/SET_ERROR"
+const CHANGE_PHOTO = "profile/CHANGE_PHOTO"
 
 type AddPostType = ReturnType<typeof addPost>
 type SetUserType = ReturnType<typeof setUserAC>
 type SetUserStatusType = ReturnType<typeof setUserStatusAC>
 type UpdateInfoType = ReturnType<typeof updateInfoAC>
-type setErroroACType = ReturnType<typeof setErrorAC>
+type SetErroroType = ReturnType<typeof setErrorAC>
+type SetChangePhotoType = ReturnType<typeof changePhotoAC>
 
-type ActionType = AddPostType | SetUserType | SetUserStatusType | UpdateInfoType | setErroroACType
-
+type ActionType = AddPostType | SetUserType | SetUserStatusType | UpdateInfoType | SetErroroType | SetChangePhotoType
 
 export type PostsType = {
   id: number
@@ -38,9 +40,23 @@ export type UserType = {
   userId: number
 }
 
+
+/* type UserType = {
+  name: string;
+  id: number;
+  uniqueUrlName: string;
+  photos: {
+      small: string | null;
+      large: string | null;
+  };
+  status: string | null;
+  followed: boolean;
+} */
+
+
 export type ProfileState = {
-    posts: PostsType[]
-    user: any 
+    posts: /* PostsType[] */any[]
+    user: UserType | any
     status: string
     error: string | null
 }
@@ -68,16 +84,19 @@ const profileReducer = (state = initialState, action: ActionType): ProfileState 
         return {...state, user: {...state.user, ...action.info}}
       case SET_ERROR:
         return {...state, error: action.error}
+      case CHANGE_PHOTO:
+        return {...state, user: {...state.user, photos: action.photos}}
     default:
       return state;
   }
 };
 
 export const addPost = (payload: PostsType) => ({type: ADD_POST, payload}) as const
-export const setUserAC = (user: PostsType) => ({type: SET_USER, user}) as const
-export const setUserStatusAC = (status: string) => ({type: SET_STATUS, status}) as const
+const setUserAC = (user: PostsType) => ({type: SET_USER, user}) as const
+const setUserStatusAC = (status: string) => ({type: SET_STATUS, status}) as const
 const updateInfoAC = (info: UserContactValues) => ({type: UPDATE_INFO, info}) as const
 export const setErrorAC = (error: string | null) => ({type: SET_ERROR, error}) as const
+const changePhotoAC = (photos: {large: string, small: string}) => ({type: CHANGE_PHOTO, photos}) as const
 
 export const setUser = (userId: number) => (dispatch: Dispatch) => {
   API.getProfile(userId)
@@ -101,6 +120,17 @@ export const updateUserInfo = (info: UserContactValues) => async(dispatch: Dispa
   const res = await API.updateInfo(info)
       if(res.resultCode === 0) {
         dispatch(updateInfoAC(info))
+      } else if (res.resultCode === 1 && res.messages.length > 0) {
+        dispatch(setErrorAC(res.messages[0]))
+      }
+}
+//
+export const updatePhoto = (photo: File) => async(dispatch: Dispatch) => {
+  
+  const res = await API.updatePhoto(photo)
+  
+      if(res.resultCode === 0) {
+        dispatch(changePhotoAC(res.data.photos))
       } else if (res.resultCode === 1 && res.messages.length > 0) {
         dispatch(setErrorAC(res.messages[0]))
       }

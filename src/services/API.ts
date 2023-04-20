@@ -70,6 +70,21 @@ const API = {
     )
     .then(res => res.data)
   },
+  updatePhoto: (image: File) => {
+    
+    const formData = new FormData();
+    formData.append('file', image);
+    
+    return instance.put(
+      `/profile/photo
+      `, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      } 
+    )
+    .then(res => res.data)
+  },
 };
 
 export default API

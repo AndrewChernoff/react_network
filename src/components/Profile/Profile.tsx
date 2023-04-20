@@ -16,9 +16,10 @@ import { UserContactValues } from "./ProfileFormInfo/ProfileFormInfo";
   updateUserInfo: (info: UserContactValues) => void
   error: string | null
   setError: (message: string | null) => void
+  uploadPhoto: (image: File) => void
 }
 
-const Profile = ({posts, onAddPostClick, authId, profile, status, updateStatus, updateUserInfo, error, setError}: ProfileProps) => {
+const Profile = ({posts, onAddPostClick, authId, profile, status, updateStatus, updateUserInfo, error, setError, uploadPhoto}: ProfileProps) => {
 
   return (
     <div className={s.profile}>
@@ -26,6 +27,7 @@ const Profile = ({posts, onAddPostClick, authId, profile, status, updateStatus, 
         <ProfileInfo authId={authId} profile={profile} status={status}
         updateStatus={updateStatus}
         updateUserInfo={updateUserInfo}
+        uploadPhoto={uploadPhoto}
         setError={setError}
         error={error}
         />

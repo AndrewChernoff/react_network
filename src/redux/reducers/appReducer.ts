@@ -9,7 +9,7 @@ type SetAppInitType = ReturnType<typeof setAppInitAC>
 
 type Action = SetAppInitType
 
-export type StateType = {
+type StateType = {
     init: boolean
 };
 

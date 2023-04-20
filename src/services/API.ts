@@ -85,6 +85,12 @@ const API = {
     )
     .then(res => res.data)
   },
+
+  getCaptcha:() => {
+    return instance.get('security/get-captcha-url')
+      .then(res => res.data)
+  }
 };
+
 
 export default API

@@ -3,12 +3,11 @@ import { connect } from "react-redux";
 import { AnyAction, compose } from "redux";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { withAuthRedirect } from "../../HOC/WithAuthRedirect";
-import { AppState } from "../../redux/reducers";
+import { AppDispatch, AppState } from "../../redux/reducers";
 import { addPost, PostsType, setErrorAC, setUser, setUserStatus, updatePhoto, updateStatus, updateUserInfo, UserType } from "../../redux/reducers/profileReducer";
 import Profile from "./Profile";
 import { UserContactValues } from "./ProfileFormInfo/ProfileFormInfo";
 import { useParams } from "react-router-dom";
-import { StateType } from "../../redux/reducers/appReducer";
 
 type PropsType = MapStateType & MapDispatchType
 
@@ -53,15 +52,15 @@ const ProfileContainer = ({setUser, setStatus, authId, addPost, posts, user, sta
 
     return (
         <Profile onAddPostClick={onAddPostClick} 
-        posts={posts}
-        profile={user}
-        authId={authId}
-        status={status}
-        updateStatus={updateStatus}
-        updateUserInfo={updateUserInfo}
-        setError={setError}
-        error={error}
-        uploadPhoto={uploadPhoto}
+          posts={posts}
+          profile={user}
+          authId={authId}
+          status={status}
+          updateStatus={updateStatus}
+          updateUserInfo={updateUserInfo}
+          setError={setError}
+          error={error}
+          uploadPhoto={uploadPhoto}
         />
     )
 }
@@ -76,7 +75,7 @@ const ProfileContainer = ({setUser, setStatus, authId, addPost, posts, user, sta
 
  
   
-  const mapDispatchToProps = (dispatch: ThunkDispatch<unknown, StateType, AnyAction>): MapDispatchType => {
+  const mapDispatchToProps = (dispatch: AppDispatch): MapDispatchType => {
     
     return {
         addPost: (obj) => {

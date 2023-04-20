@@ -1,7 +1,6 @@
 import { Dispatch } from "redux"
 import API from "../../services/API"
 import { UserContactValues } from "../../components/Profile/ProfileFormInfo/ProfileFormInfo"
-import { UsersType } from "./usersReducer"
 
 const ADD_POST = "profile/ADD_POST"
 const SET_USER = "profile/SET_USER"
@@ -40,22 +39,8 @@ export type UserType = {
   userId: number
 }
 
-
-/* type UserType = {
-  name: string;
-  id: number;
-  uniqueUrlName: string;
-  photos: {
-      small: string | null;
-      large: string | null;
-  };
-  status: string | null;
-  followed: boolean;
-} */
-
-
 export type ProfileState = {
-    posts: /* PostsType[] */any[]
+    posts: PostsType[]
     user: UserType | any
     status: string
     error: string | null

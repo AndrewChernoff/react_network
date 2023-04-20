@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import FormControl from "../../common/FormControl/FormControl";
-import { AppState } from "../../redux/reducers";
+import { AppDispatch, AppState } from "../../redux/reducers";
 import { logIn } from "../../redux/reducers/authReducer";
 import s from './Login.module.scss'
 
@@ -11,14 +11,15 @@ interface Values {
     password: string
     email: string
     rememberMe: boolean
+    captcha: string
   }
 
   const Login = () => {
     const isAuth = useSelector<AppState, boolean>(state => state.auth.isAuth)
     const loginError = useSelector<AppState, boolean>(state => state.auth.loginError)
-    const dispatch = useDispatch<any>()
+    const captchaImg = useSelector<AppState, string | null>(state => state.auth.captcha)
+    const dispatch = useDispatch<AppDispatch>()
     const navigate = useNavigate();
-
 
     useEffect(() => {
       if(isAuth) navigate("/profile");
@@ -50,13 +51,20 @@ interface Values {
             initialValues={{
               password: '',
               email: '',
-              rememberMe: false
+              rememberMe: false,
+              captcha: ''
             }}
             onSubmit={(
               values: Values,
               { setSubmitting }: FormikHelpers<Values>
             ) => {
               setTimeout(() => {
+                const formValues = {
+                  password: values.password,
+                  email: values.email,
+                  rememberMe: values.rememberMe,
+                  captcha: values.captcha
+                }
                 dispatch(logIn(values))
                 setSubmitting(false);
               }, 500);
@@ -93,6 +101,13 @@ interface Values {
               <button type="submit" className={s.btn}>Submit</button>
               {loginError ? <div className={s.errorBlock}>'Incorrect Email or Password'</div>: null}
 
+
+              {captchaImg && <div> 
+              <img src={captchaImg} alt='captcha'/>
+              {/* <input type='text'/> */}
+              <Field id="captcha" name="captcha"  type="input"/>
+
+            </div>}
             </Form>)}
           </Formik>
         </div>

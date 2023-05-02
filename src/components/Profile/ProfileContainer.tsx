@@ -4,16 +4,16 @@ import { AnyAction, compose } from "redux";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { withAuthRedirect } from "../../HOC/WithAuthRedirect";
 import { AppDispatch, AppState } from "../../redux/reducers";
-import { addPost, PostsType, setErrorAC, setUser, setUserStatus, updatePhoto, updateStatus, updateUserInfo, UserType } from "../../redux/reducers/profileReducer";
+import { addPost, PostsType, setErrorAC, setUser, setUserStatus, updatePhoto, updateStatus, updateUserInfo } from "../../redux/reducers/profileReducer";
 import Profile from "./Profile";
-import { UserContactValues } from "./ProfileFormInfo/ProfileFormInfo";
 import { useParams } from "react-router-dom";
+import { UserContactValues, UserInfoType } from "../../services/API";
 
 type PropsType = MapStateType & MapDispatchType
 
 export type MapStateType = {
   posts: PostsType[]
-  user: UserType
+  user: UserInfoType
   authId: number | null
   status: string
   error: string | null

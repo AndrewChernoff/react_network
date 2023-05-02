@@ -1,12 +1,12 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import userAva from '../../imgs/user.png';
-import { UserType } from "../../redux/reducers/profileReducer";
 import s from "./ProfileInfo.module.scss";
-import ProfileFormInfo, { UserContactValues } from "./ProfileFormInfo/ProfileFormInfo";
+import ProfileFormInfo from "./ProfileFormInfo/ProfileFormInfo";
+import { UserContactValues, UserInfoType } from "../../services/API";
 
 type ProfileInfoType = {
   authId: number | null
-  profile: UserType
+  profile: UserInfoType
   status: string
   updateStatus: (status: string) => void
   updateUserInfo: (info: UserContactValues) => void
@@ -82,7 +82,7 @@ const ProfileInfo = ({authId, profile, status, updateStatus, updateUserInfo, err
       <h3> Contacts:</h3>
     <ul>
         {profile && Object.keys(profile.contacts).map(key => {
-          return <li>{key}: {profile.contacts[key] || '--'}</li>
+          return <li key={key}>{key}: {profile.contacts[key] || '--'}</li>
         })}
       </ul>
     </div>

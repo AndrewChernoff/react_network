@@ -1,20 +1,12 @@
 import { Field, Form, Formik } from "formik";
-import { UserType } from "../../../redux/reducers/profileReducer";
 import s from './ProfileFormInfo.module.scss'
 import FormControl from "../../../common/FormControl/FormControl";
+import { UserContactValues, UserInfoType } from "../../../services/API";
 
-export type UserContactValues = {
-  fullName: string | null
-  aboutMe: string | null
-  lookingForAJobDescription: boolean //?
-  lookingForAJob: boolean //?
-  contacts: {
-    [key:string]: string | null
-  }
-}
+
 
 type ProfileFormInfoType = {
-  profile: UserType
+  profile: UserInfoType
   updateUserInfo: (info: UserContactValues) => void
   setEditInfo: () => void
 }
@@ -51,11 +43,9 @@ const ProfileFormInfo = ({profile, updateUserInfo, setEditInfo}:  ProfileFormInf
        <h1>Edit Info</h1>
        <Formik
          initialValues={initialValues}
-         onSubmit={(values, actions) => {
-           console.log(values);
-          updateUserInfo(values);
-            //actions.setSubmitting(false);
-           setEditInfo()
+         onSubmit={(values) => {
+            updateUserInfo(values);
+            setEditInfo();
          }}
        >
        {({ errors }) => ( <Form className={s.formInfo}>
@@ -74,7 +64,7 @@ const ProfileFormInfo = ({profile, updateUserInfo, setEditInfo}:  ProfileFormInf
              {profile.contacts && 
                 Object.keys(profile.contacts).map((_,i) => {
                     const contactName = Object.keys(profile.contacts)[i]
-                 return <li>{contactName}:<Field id={`contacts.${contactName}`} name={`contacts.${contactName}`} /></li>
+                 return <li key={i + '_contact'}>{contactName}:<Field id={`contacts.${contactName}`} name={`contacts.${contactName}`} /></li>
                 })}
             <button type="submit">Submit</button>
             <button onClick={setEditInfo}>Cancel</button>

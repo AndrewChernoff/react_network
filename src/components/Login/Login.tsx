@@ -7,7 +7,7 @@ import { AppDispatch, AppState } from "../../redux/reducers";
 import { logIn } from "../../redux/reducers/authReducer";
 import s from './Login.module.scss'
 
-interface Values {
+export type LoginValues =  {
     password: string
     email: string
     rememberMe: boolean
@@ -55,8 +55,8 @@ interface Values {
               captcha: ''
             }}
             onSubmit={(
-              values: Values,
-              { setSubmitting }: FormikHelpers<Values>
+              values: LoginValues,
+              { setSubmitting }: FormikHelpers<LoginValues>
             ) => {
               setTimeout(() => {
                 const formValues = {

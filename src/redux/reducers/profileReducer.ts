@@ -1,6 +1,5 @@
 import { Dispatch } from "redux"
-import API from "../../services/API"
-import { UserContactValues } from "../../components/Profile/ProfileFormInfo/ProfileFormInfo"
+import API, { UserContactValues, UserInfoType } from "../../services/API"
 
 const ADD_POST = "profile/ADD_POST"
 const SET_USER = "profile/SET_USER"
@@ -24,24 +23,9 @@ export type PostsType = {
   likes: number
 }
 
-export type UserType = {
-  aboutMe: string
-  contacts: {
-    [key: string]: string
-  }
-  fullName: string
-  lookingForAJob: boolean
-  lookingForAJobDescription: boolean
-  photos: {
-    small: string
-    large: string
-  }
-  userId: number
-}
-
 export type ProfileState = {
     posts: PostsType[]
-    user: UserType | any
+    user: UserInfoType | any
     status: string
     error: string | null
 }
@@ -77,7 +61,7 @@ const profileReducer = (state = initialState, action: ActionType): ProfileState 
 };
 
 export const addPost = (payload: PostsType) => ({type: ADD_POST, payload}) as const
-const setUserAC = (user: PostsType) => ({type: SET_USER, user}) as const
+const setUserAC = (user: UserInfoType) => ({type: SET_USER, user}) as const
 const setUserStatusAC = (status: string) => ({type: SET_STATUS, status}) as const
 const updateInfoAC = (info: UserContactValues) => ({type: UPDATE_INFO, info}) as const
 export const setErrorAC = (error: string | null) => ({type: SET_ERROR, error}) as const
@@ -85,7 +69,7 @@ const changePhotoAC = (photos: {large: string, small: string}) => ({type: CHANGE
 
 export const setUser = (userId: number) => (dispatch: Dispatch) => {
   API.getProfile(userId)
-        .then(data => dispatch(setUserAC(data))
+        .then((data) => dispatch(setUserAC(data))
         )
 }
 

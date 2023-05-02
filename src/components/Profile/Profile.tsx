@@ -1,16 +1,16 @@
 import { Form, Formik, FormikHelpers } from "formik";
 import FormControl from "../../common/FormControl/FormControl";
-import { PostsType, UserType } from "../../redux/reducers/profileReducer";
+import { PostsType } from "../../redux/reducers/profileReducer";
 import PostItem from "../PostItem/PostItem";
 import s from "./Profile.module.scss";
 import ProfileInfo from "./ProfileInfo";
-import { UserContactValues } from "./ProfileFormInfo/ProfileFormInfo";
+import { UserContactValues, UserInfoType } from "../../services/API";
 
  type ProfileProps = {
   posts: PostsType[],
   onAddPostClick: (value: string) => void
   authId: number | null
-  profile: UserType
+  profile: UserInfoType
   status: string
   updateStatus: (status: string) => void
   updateUserInfo: (info: UserContactValues) => void

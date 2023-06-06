@@ -1,7 +1,7 @@
 {
   "name": "my-app",
   "version": "0.1.0",
-  "homepage": "https://react-network.vercel.app/",
+  "homepage": ".",
   "proxy": "https://react-network.vercel.app/",
   "private": true,
   "dependencies": {
